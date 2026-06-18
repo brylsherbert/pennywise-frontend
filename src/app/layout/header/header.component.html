@@ -1,0 +1,38 @@
+<ion-header mode="ios" [translucent]="false">
+  <ion-toolbar>
+    <div class="header-content">
+      <div class="header-side header-side--start">
+        <ng-content select="ion-buttons[slot='start']"></ng-content>
+      </div>
+
+      <div class="header-title">
+        <span class="header-title__text">
+          <ng-content select=":not(ion-buttons)"></ng-content>
+        </span>
+
+        @if (summaryBadges().length > 0) {
+          <span class="header-title__summaries">
+            @for (badge of summaryBadges(); track badge.label) {
+              <span
+                class="header-title__summary"
+                [class.header-title__summary--income]="badge.variant === 'income'"
+                [class.header-title__summary--expense]="badge.variant === 'expense'"
+                [class.header-title__summary--fill]="badge.variant === 'fill'"
+              >
+                {{ badge.label }}
+              </span>
+            }
+          </span>
+        } @else if (summary(); as headerSummary) {
+          <span class="header-title__summaries">
+            <span class="header-title__summary">{{ headerSummary }}</span>
+          </span>
+        }
+      </div>
+
+      <div class="header-side header-side--end">
+        <ng-content select="ion-buttons[slot='end']"></ng-content>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>

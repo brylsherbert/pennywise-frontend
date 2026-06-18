@@ -1,1 +1,21 @@
+@use 'mixins' as *;
 
+ion-tab-bar {
+    margin: 20px 8px;
+    padding: 5px 5px;
+    @include border-radius();
+    @include ion-tab-bar-glass();
+}
+
+ion-tab-button {
+    background: transparent;
+}
+
+.quick-create-fab {
+    margin-bottom: 82px;
+    margin-right: 0px;
+}
+
+ion-fab-button {
+    @include apple-fab-button();
+}

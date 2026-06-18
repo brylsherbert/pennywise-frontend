@@ -1,4 +1,78 @@
-<ion-tabs>
+<ion-tabs mode="ios">
+  <app-account-create-modal
+    [isOpen]="activeCreateModal() === 'account'"
+    (dismissed)="closeCreateModal()"
+  />
+
+  <app-budget-create-modal
+    [isOpen]="activeCreateModal() === 'budget'"
+    (dismissed)="closeCreateModal()"
+  />
+
+  <app-category-create-modal
+    [isOpen]="activeCreateModal() === 'category'"
+    (dismissed)="closeCreateModal()"
+  />
+
+  <app-transaction-create-modal
+    [isOpen]="activeCreateModal() === 'transaction'"
+    (dismissed)="closeCreateModal()"
+  />
+
+  <ion-fab
+    class="quick-create-fab"
+    slot="fixed"
+    vertical="bottom"
+    horizontal="end"
+    [activated]="isQuickCreateFabOpen()"
+  >
+    <ion-fab-button aria-label="Open create menu" (click)="toggleQuickCreateFab()">
+      <ion-icon name="add-outline" aria-hidden="true"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-list side="top">
+      <ion-fab-button size="small" (click)="openCreateModal('budget')" aria-label="Create budget">
+        <ion-icon name="pie-chart-outline" aria-hidden="true"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button size="small" (click)="openCreateModal('account')" aria-label="Create account">
+        <ion-icon name="card-outline" aria-hidden="true"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button size="small" (click)="openCreateModal('category')" aria-label="Create category">
+        <ion-icon name="pricetags-outline" aria-hidden="true"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button size="small" (click)="openCreateModal('transaction')" aria-label="Create transaction">
+        <ion-icon name="swap-horizontal-outline" aria-hidden="true"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
   <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="budgets" href="/budgets">
+      <ion-icon aria-hidden="true" name="pie-chart-outline"></ion-icon>
+      <ion-label>Budgets</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="transactions" href="/transactions">
+      <ion-icon aria-hidden="true" name="swap-horizontal-outline"></ion-icon>
+      <ion-label>Transactions</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="accounts" href="/accounts">
+      <ion-icon aria-hidden="true" name="card-outline"></ion-icon>
+      <ion-label>Accounts</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="reports" href="/reports">
+      <ion-icon aria-hidden="true" name="bar-chart-outline"></ion-icon>
+      <ion-label>Reports</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="settings" href="/settings">
+      <ion-icon aria-hidden="true" name="settings-outline"></ion-icon>
+      <ion-label>Settings</ion-label>
+    </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
