@@ -1,0 +1,32 @@
+@use 'mixins' as *;
+@use '../report-card.shared' as reports;
+
+@include reports.report-card();
+
+.unallocated-card__amount {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  color: var(--ion-text-color);
+}
+
+.unallocated-card__meta {
+  @include flex-row();
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ion-color-medium);
+}
+
+@media (max-width: 767px) {
+  .unallocated-card__meta {
+    flex-wrap: wrap;
+  }
+
+  .unallocated-card__amount {
+    font-size: 30px;
+  }
+}

@@ -1,0 +1,53 @@
+<section class="report-card" aria-labelledby="daily-spending-heading">
+  <div class="report-card__header">
+    <div>
+      <h2 id="daily-spending-heading" class="report-card__title">Daily Spending</h2>
+      <p class="report-card__subtitle">Recent expense totals grouped by transaction day.</p>
+      <p class="report-card__date">Today · {{ currentDate() | date: 'EEEE, MMM d, y' }}</p>
+    </div>
+    <span class="report-card__legend">
+      <span class="report-card__legend-dot" aria-hidden="true"></span>
+      Recent
+    </span>
+  </div>
+
+  @if (recentSpending().length > 0) {
+    <div class="spending-chart" aria-label="Recent daily spending chart">
+      @for (day of recentSpending(); track day.date) {
+        <button
+          type="button"
+          class="spending-chart__item"
+          [attr.aria-label]="day.label + ' total spending ' + (day.amount | currency)"
+          (click)="openSpendingPopover(day, $event)"
+        >
+          <div class="spending-chart__bar-track">
+            <span
+              class="spending-chart__bar"
+              [style.height.%]="day.percent"
+              aria-hidden="true"
+            ></span>
+          </div>
+          <span class="spending-chart__label">{{ day.label }}</span>
+        </button>
+      }
+    </div>
+
+    <ion-popover
+      [isOpen]="selectedSpendingDay() !== null"
+      [event]="spendingPopoverEvent()"
+      (didDismiss)="closeSpendingPopover()"
+    >
+      <ng-template>
+        @if (selectedSpendingDay(); as day) {
+          <div class="spending-popover">
+            <p class="spending-popover__label">{{ day.date | date: 'EEE, MMM d' }}</p>
+            <p class="spending-popover__amount">{{ day.amount | currency }}</p>
+            <p class="spending-popover__caption">Total spent this day</p>
+          </div>
+        }
+      </ng-template>
+    </ion-popover>
+  } @else {
+    <p class="report-card__empty-text">No expense transactions yet.</p>
+  }
+</section>

@@ -1,0 +1,137 @@
+@use 'mixins' as *;
+@use '../report-card.shared' as reports;
+
+@include reports.report-card();
+
+.report-card__date {
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ion-color-primary);
+}
+
+.report-card__legend {
+  @include flex-row();
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ion-color-medium);
+}
+
+.report-card__legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ion-color-primary);
+  box-shadow: 0 0 8px rgba(var(--ion-color-primary-rgb), 0.45);
+}
+
+.spending-chart {
+  @include flex-row();
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 210px;
+  padding-top: 20px;
+}
+
+.spending-chart__item {
+  @include flex-column();
+  align-items: center;
+  flex: 1;
+  gap: 10px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: none;
+
+    .spending-chart__bar-track {
+      box-shadow: 0 0 0 2px var(--ion-color-primary);
+    }
+  }
+
+  &:active {
+    .spending-chart__bar {
+      filter: brightness(1.08);
+    }
+  }
+}
+
+.spending-chart__bar-track {
+  @include flex-row();
+  align-items: flex-end;
+  width: 100%;
+  height: 170px;
+  border-radius: 18px 18px 10px 10px;
+  background: rgba(var(--ion-color-primary-rgb), 0.08);
+  overflow: hidden;
+}
+
+.spending-chart__bar {
+  display: block;
+  width: 100%;
+  min-height: 10px;
+  border-radius: 18px 18px 8px 8px;
+  background: linear-gradient(180deg, var(--ion-color-primary), #1f5fe5);
+  box-shadow: 0 -6px 16px rgba(var(--ion-color-primary-rgb), 0.24);
+}
+
+.spending-chart__label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ion-color-medium);
+}
+
+.spending-popover {
+  @include flex-column();
+  gap: 4px;
+  min-width: 180px;
+  padding: 16px;
+  text-align: center;
+}
+
+.spending-popover__label,
+.spending-popover__amount,
+.spending-popover__caption {
+  margin: 0;
+}
+
+.spending-popover__label,
+.spending-popover__caption {
+  color: var(--ion-color-medium);
+}
+
+.spending-popover__label {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.spending-popover__amount {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  color: var(--ion-text-color);
+}
+
+.spending-popover__caption {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .spending-chart {
+    gap: 6px;
+    min-height: 180px;
+  }
+
+  .spending-chart__bar-track {
+    height: 140px;
+  }
+}

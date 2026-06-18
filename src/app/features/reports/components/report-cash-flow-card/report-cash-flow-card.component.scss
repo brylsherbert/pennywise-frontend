@@ -1,0 +1,56 @@
+@use 'mixins' as *;
+@use '../report-card.shared' as reports;
+
+@include reports.report-card();
+@include reports.metric-card();
+
+.cash-flow-grid {
+  @include flex-row();
+  gap: 12px;
+}
+
+.cash-flow-summary {
+  @include flex-row();
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cash-flow-summary__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ion-color-medium);
+}
+
+.cash-flow-summary__amount {
+  margin: 4px 0 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+
+  &--positive {
+    color: var(--ion-color-success);
+  }
+
+  &--negative {
+    color: var(--ion-color-danger);
+  }
+}
+
+.cash-flow-summary__percent {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ion-color-medium);
+}
+
+@media (max-width: 767px) {
+  .cash-flow-grid,
+  .cash-flow-summary {
+    flex-wrap: wrap;
+  }
+
+  .cash-flow-summary {
+    align-items: flex-start;
+  }
+}

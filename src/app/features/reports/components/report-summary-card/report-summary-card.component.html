@@ -1,0 +1,45 @@
+<section class="summary-card" aria-labelledby="reports-summary-heading">
+  <div>
+    <p id="reports-summary-heading" class="summary-card__label">Total Spent</p>
+    <p class="summary-card__subtitle">Total expense transactions across your budgets.</p>
+  </div>
+  <p class="summary-card__amount">{{ totalExpense() | currency }}</p>
+
+  <div class="summary-card__metrics">
+    <article class="metric-card">
+      <span class="metric-card__label">Income</span>
+      <span class="metric-card__value metric-card__value--income">
+        {{ totalIncome() | currency }}
+      </span>
+    </article>
+
+    <article class="metric-card">
+      <span class="metric-card__label">Budget</span>
+      <span class="metric-card__value">{{ totalAllocated() | currency }}</span>
+    </article>
+  </div>
+
+  <div class="summary-card__usage">
+    <div class="summary-card__usage-header">
+      <span class="summary-card__usage-label">Budget used</span>
+      <span class="summary-card__usage-value">{{ budgetUsagePercent() | number: '1.0-0' }}%</span>
+    </div>
+    <ion-progress-bar
+      [value]="budgetUsageValue()"
+      [color]="budgetUsageColor()"
+      aria-label="Budget usage progress"
+    ></ion-progress-bar>
+  </div>
+
+  <footer class="summary-card__footer">
+    <div class="summary-card__footer-item">
+      <span class="summary-card__footer-label">Unallocated</span>
+      <span class="summary-card__footer-value">{{ totalUnallocated() | currency }}</span>
+    </div>
+    <span class="summary-card__footer-divider" aria-hidden="true"></span>
+    <div class="summary-card__footer-item">
+      <span class="summary-card__footer-label">Balance</span>
+      <span class="summary-card__footer-value">{{ totalBalance() | currency }}</span>
+    </div>
+  </footer>
+</section>

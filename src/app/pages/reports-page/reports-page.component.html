@@ -1,0 +1,53 @@
+<app-header [summary]="headerSummary()">Reports</app-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="items-container reports-container">
+    @if (budgetSummary()) {
+      <app-report-summary-card
+        [totalExpense]="totalExpense()"
+        [totalIncome]="totalIncome()"
+        [totalAllocated]="totalAllocated()"
+        [totalUnallocated]="totalUnallocated()"
+        [totalBalance]="totalBalance()"
+        [budgetUsagePercent]="budgetUsagePercent()"
+        [budgetUsageValue]="budgetUsageValue()"
+      />
+
+      <app-report-daily-spending-card
+        [recentSpending]="recentSpending()"
+        [currentDate]="currentDate()"
+      />
+
+      <app-report-cash-flow-card
+        [totalIncome]="totalIncome()"
+        [totalExpense]="totalExpense()"
+        [netCashFlow]="netCashFlow()"
+        [hasPositiveCashFlow]="hasPositiveCashFlow()"
+        [spendingToIncomePercent]="spendingToIncomePercent()"
+        [spendingToIncomeValue]="spendingToIncomeValue()"
+      />
+
+      <app-report-category-breakdown-card [categoryBreakdown]="categoryBreakdown()" />
+
+      <app-report-budget-health-card [budgetHealth]="budgetHealth()" />
+    } @else if (isLoadingSummary()) {
+      <section class="summary-card summary-card--loading" aria-busy="true" aria-label="Loading report summary">
+        <div class="summary-card__skeleton summary-card__skeleton--label"></div>
+        <div class="summary-card__skeleton summary-card__skeleton--amount"></div>
+        <div class="summary-card__metrics">
+          <div class="summary-card__skeleton summary-card__skeleton--metric"></div>
+          <div class="summary-card__skeleton summary-card__skeleton--metric"></div>
+        </div>
+      </section>
+    } @else {
+      <section class="summary-card summary-card--empty">
+        <p class="summary-card__empty-title">No report data yet</p>
+        <p class="summary-card__empty-text">Pull down to refresh or add transactions to see your summary.</p>
+      </section>
+    }
+  </div>
+</ion-content>

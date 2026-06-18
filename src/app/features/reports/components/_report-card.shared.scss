@@ -1,0 +1,91 @@
+@use 'mixins' as *;
+
+@mixin report-card {
+  .report-card {
+    @include glass-background(
+      rgba(255, 255, 255, 0.05),
+      16px,
+      rgba(255, 255, 255, 0.1),
+      1px,
+      0 10px 34px rgba(0, 0, 0, 0.22)
+    );
+    @include flex-column();
+    gap: 18px;
+    border-radius: 28px;
+    padding: 22px;
+  }
+
+  .report-card__header {
+    @include flex-row();
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .report-card__title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ion-text-color);
+  }
+
+  .report-card__subtitle {
+    margin: 6px 0 0;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ion-color-medium);
+  }
+
+  .report-card__empty-text {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ion-color-medium);
+  }
+
+  @media (max-width: 767px) {
+    .report-card {
+      padding: 20px 18px;
+      border-radius: 24px;
+    }
+  }
+}
+
+@mixin metric-card {
+  .metric-card {
+    @include flex-column();
+    flex: 1;
+    gap: 6px;
+    padding: 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .metric-card__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ion-color-medium);
+  }
+
+  .metric-card__value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ion-text-color);
+    letter-spacing: -0.3px;
+
+    &--income {
+      color: var(--ion-color-success);
+    }
+
+    &--expense {
+      color: var(--ion-color-danger);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .metric-card__value {
+      font-size: 20px;
+    }
+  }
+}

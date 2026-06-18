@@ -1,0 +1,46 @@
+<section class="report-card" aria-labelledby="cash-flow-heading">
+  <div>
+    <h2 id="cash-flow-heading" class="report-card__title">Income vs Expense</h2>
+    <p class="report-card__subtitle">Cash flow based on income and expense transactions.</p>
+  </div>
+
+  <div class="cash-flow-grid">
+    <article class="metric-card">
+      <span class="metric-card__label">Income</span>
+      <span class="metric-card__value metric-card__value--income">
+        {{ totalIncome() | currency }}
+      </span>
+    </article>
+
+    <article class="metric-card">
+      <span class="metric-card__label">Expenses</span>
+      <span class="metric-card__value metric-card__value--expense">
+        {{ totalExpense() | currency }}
+      </span>
+    </article>
+  </div>
+
+  <div class="cash-flow-summary">
+    <div>
+      <span class="cash-flow-summary__label">
+        {{ hasPositiveCashFlow() ? 'Surplus' : 'Deficit' }}
+      </span>
+      <p
+        class="cash-flow-summary__amount"
+        [class.cash-flow-summary__amount--positive]="hasPositiveCashFlow()"
+        [class.cash-flow-summary__amount--negative]="!hasPositiveCashFlow()"
+      >
+        {{ netCashFlow() | currency }}
+      </p>
+    </div>
+    <span class="cash-flow-summary__percent">
+      {{ spendingToIncomePercent() | number: '1.0-0' }}% spent
+    </span>
+  </div>
+
+  <ion-progress-bar
+    [value]="spendingToIncomeValue()"
+    [color]="spendingToIncomeColor()"
+    aria-label="Expense to income ratio"
+  ></ion-progress-bar>
+</section>

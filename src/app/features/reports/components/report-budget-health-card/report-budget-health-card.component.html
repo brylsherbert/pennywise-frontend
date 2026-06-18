@@ -1,0 +1,33 @@
+<section class="report-card" aria-labelledby="budget-health-heading">
+  <div>
+    <h2 id="budget-health-heading" class="report-card__title">Budget Health</h2>
+    <p class="report-card__subtitle">Allocated amount compared with each budget target.</p>
+  </div>
+
+  @if (budgetHealth().length > 0) {
+    <div class="budget-health-list">
+      @for (budget of budgetHealth(); track budget.id) {
+        <article class="budget-health-item">
+          <div class="budget-health-item__header">
+            <div>
+              <h3 class="budget-health-item__name">{{ budget.name }}</h3>
+              <p class="budget-health-item__meta">
+                {{ budget.allocated | currency }} of {{ budget.target | currency }}
+              </p>
+            </div>
+            <span [class]="'budget-health-item__status ' + budget.className">
+              {{ budget.status }}
+            </span>
+          </div>
+          <ion-progress-bar
+            [value]="budget.progressValue"
+            [color]="budget.color"
+            [attr.aria-label]="budget.name + ' budget funding ' + (budget.percent | number: '1.0-0') + '%'"
+          ></ion-progress-bar>
+        </article>
+      }
+    </div>
+  } @else {
+    <p class="report-card__empty-text">Create budgets to see health reports.</p>
+  }
+</section>

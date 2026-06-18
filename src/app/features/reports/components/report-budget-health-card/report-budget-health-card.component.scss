@@ -1,0 +1,52 @@
+@use 'mixins' as *;
+@use '../report-card.shared' as reports;
+
+@include reports.report-card();
+
+.budget-health-list {
+  @include flex-column();
+  gap: 16px;
+}
+
+.budget-health-item {
+  @include flex-column();
+  gap: 10px;
+}
+
+.budget-health-item__header {
+  @include flex-row();
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.budget-health-item__name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ion-text-color);
+}
+
+.budget-health-item__meta {
+  margin: 4px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ion-color-medium);
+}
+
+.budget-health-item__status {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ion-text-color);
+  @include budget-health-color-variants();
+}
+
+@media (max-width: 767px) {
+  .budget-health-item__header {
+    align-items: flex-start;
+  }
+}

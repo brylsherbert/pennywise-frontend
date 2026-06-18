@@ -1,0 +1,19 @@
+<section class="report-card" aria-labelledby="unallocated-funds-heading">
+  <div>
+    <h2 id="unallocated-funds-heading" class="report-card__title">Unallocated Funds</h2>
+    <p class="report-card__subtitle">Money available but not yet assigned to a budget.</p>
+  </div>
+
+  <p class="unallocated-card__amount">{{ totalUnallocated() | currency }}</p>
+
+  <div class="unallocated-card__meta">
+    <span>Available balance: {{ totalBalance() | currency }}</span>
+    <span>{{ unallocatedSharePercent() | number: '1.0-0' }}% unassigned</span>
+  </div>
+
+  <ion-progress-bar
+    [value]="unallocatedShareValue()"
+    color="primary"
+    aria-label="Unallocated funds share of available balance"
+  ></ion-progress-bar>
+</section>

@@ -1,0 +1,38 @@
+<section class="report-card" aria-labelledby="category-breakdown-heading">
+  <div>
+    <h2 id="category-breakdown-heading" class="report-card__title">Expense Breakdown</h2>
+    <p class="report-card__subtitle">Expenses grouped by budget category.</p>
+  </div>
+
+  @if (categoryBreakdown().length > 0) {
+    <div class="breakdown-list">
+      @for (item of categoryBreakdown(); track item.label) {
+        <article class="breakdown-item">
+          <div class="breakdown-item__header">
+            <span class="breakdown-item__name">
+              <span
+                class="breakdown-item__dot"
+                [style.background]="item.color"
+                aria-hidden="true"
+              ></span>
+              {{ item.label }}
+            </span>
+            <span class="breakdown-item__amount">
+              {{ item.amount | currency }}
+              <span class="breakdown-item__percent">{{ item.percent | number: '1.0-0' }}%</span>
+            </span>
+          </div>
+          <div class="breakdown-item__track" aria-hidden="true">
+            <span
+              class="breakdown-item__bar"
+              [style.width.%]="item.percent"
+              [style.background]="item.color"
+            ></span>
+          </div>
+        </article>
+      }
+    </div>
+  } @else {
+    <p class="report-card__empty-text">No category spending to show yet.</p>
+  }
+</section>
