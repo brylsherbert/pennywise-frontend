@@ -1,0 +1,158 @@
+@use 'mixins' as *;
+
+.account-card {
+  @include glass-background(
+    rgba(255, 255, 255, 0.06),
+    16px,
+    rgba(255, 255, 255, 0.12),
+    1px,
+    0 10px 40px rgba(0, 0, 0, 0.28)
+  );
+  @include flex-column();
+  gap: 20px;
+  border-radius: 28px;
+  padding: 22px 22px 18px;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.account-card__top {
+  @include flex-row();
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.account-card__info {
+  @include flex-column();
+  gap: 4px;
+  min-width: 0;
+}
+
+.account-card__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ion-color-medium);
+}
+
+.account-card__account-no {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ion-text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.account-card__actions {
+  @include flex-row();
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.account-card__action {
+  @include flex-row();
+  @include flex-center();
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(var(--ion-color-primary-rgb), 0.15);
+  color: var(--ion-color-primary);
+  border: 1px solid rgba(var(--ion-color-primary-rgb), 0.22);
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.account-card__balance {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+  line-height: 1.1;
+  color: var(--ion-text-color);
+}
+
+.account-card__footer {
+  @include flex-row();
+  align-items: center;
+  gap: 14px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.account-card__status {
+  @include flex-row();
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ion-text-color);
+}
+
+.account-card__status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ion-color-success, #2dd36f);
+  box-shadow: 0 0 8px rgba(var(--ion-color-success-rgb, 45, 211, 111), 0.45);
+}
+
+.account-card__footer-divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+.account-card__meta {
+  @include flex-row();
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ion-color-medium);
+
+  ion-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 767px) {
+  .account-card {
+    padding: 18px 18px 16px;
+    border-radius: 24px;
+    gap: 16px;
+  }
+
+  .account-card__balance {
+    font-size: 28px;
+  }
+
+  .account-card__footer {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}

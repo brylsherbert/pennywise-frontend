@@ -1,0 +1,19 @@
+@use 'mixins' as *;
+
+ion-modal {
+  @include apple-modal-shell();
+}
+
+ion-content {
+  @include apple-modal-content();
+}
+
+
+.account-form {
+  @include apple-modal-form();
+}
+
+ion-button[type='submit'] {
+  @include apple-primary-button();
+  margin-top: 6px;
+}

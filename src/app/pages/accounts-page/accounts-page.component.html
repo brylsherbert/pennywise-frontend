@@ -1,0 +1,26 @@
+<app-header [summary]="headerSummary()">Accounts</app-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="accounts-container">
+    @if (isLoadingAccounts() && accounts().length === 0) {
+      <app-accounts-list-skeleton />
+    } @else {
+      @for (account of accounts(); track account.id) {
+      <app-account-card
+        [account]="account"
+        (selected)="openAccount($event)"
+      />
+      } @empty {
+      <ion-item lines="none">
+        <ion-label class="ion-text-center">
+          <p>No accounts found</p>
+        </ion-label>
+      </ion-item>
+      }
+    }
+  </div>
+</ion-content>

@@ -1,0 +1,34 @@
+<article
+  class="account-card"
+  role="link"
+  tabindex="0"
+  (click)="handleSelect()"
+  (keydown.enter)="handleSelect()"
+>
+  <div class="account-card__top">
+    <div class="account-card__info">
+      <span class="account-card__label">{{ account().name }}</span>
+      <span class="account-card__account-no">Account •• {{ maskedAccountId() }}</span>
+    </div>
+
+    <div class="account-card__actions">
+      <div class="account-card__action" aria-hidden="true">
+        <ion-icon name="wallet-outline"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <p class="account-card__balance">{{ account().balance | currency }}</p>
+
+  <footer class="account-card__footer">
+    <div class="account-card__status">
+      <span class="account-card__status-dot"></span>
+      <span>Active</span>
+    </div>
+    <span class="account-card__footer-divider" aria-hidden="true"></span>
+    <div class="account-card__meta">
+      <ion-icon name="swap-horizontal-outline" aria-hidden="true"></ion-icon>
+      <span>Since {{ account().created_at | date: 'yyyy' }}</span>
+    </div>
+  </footer>
+</article>

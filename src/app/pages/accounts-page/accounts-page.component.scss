@@ -1,0 +1,21 @@
+@use 'mixins' as *;
+
+.accounts-container {
+  @include flex-column();
+  @include app-tab-content-bottom-spacing();
+  gap: var(--ios-spacing-lg, 24px);
+  padding-inline: var(--ios-spacing-md, 16px);
+  padding-top: 8px;
+}
+
+ion-item {
+  @include apple-empty-item();
+}
+
+@media (max-width: 767px) {
+  .accounts-container {
+    gap: var(--ios-spacing-md, 16px);
+    padding-inline: var(--ios-spacing-sm, 8px);
+    padding-top: 8px;
+  }
+}

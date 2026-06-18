@@ -1,0 +1,23 @@
+<div class="accounts-skeleton-list" aria-busy="true" aria-label="Loading accounts">
+  @for (item of skeletonItems; track item) {
+    <article class="account-skeleton-card">
+      <div class="account-skeleton-card__top">
+        <div class="account-skeleton-card__info">
+          <div class="account-skeleton account-skeleton--label"></div>
+          <div class="account-skeleton account-skeleton--number"></div>
+        </div>
+        <div class="account-skeleton-card__actions">
+          <div class="account-skeleton account-skeleton--action"></div>
+          <div class="account-skeleton account-skeleton--action"></div>
+        </div>
+      </div>
+
+      <div class="account-skeleton account-skeleton--balance"></div>
+
+      <div class="account-skeleton-card__footer">
+        <div class="account-skeleton account-skeleton--footer"></div>
+        <div class="account-skeleton account-skeleton--footer"></div>
+      </div>
+    </article>
+  }
+</div>

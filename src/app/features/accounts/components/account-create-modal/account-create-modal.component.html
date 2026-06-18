@@ -1,0 +1,32 @@
+<ion-modal [isOpen]="isOpen()" (didDismiss)="onModalDismiss()">
+  <ng-template>
+    <ion-header mode="ios">
+      <ion-toolbar>
+        <ion-title>New Account</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()" aria-label="Close">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding" mode="ios">
+      <form class="account-form" novalidate (submit)="onSubmit($event)">
+        <app-account-form-fields [accountForm]="accountForm" />
+
+        <ion-button
+          expand="block"
+          type="submit"
+          [disabled]="isSubmitDisabled() || isSubmitting()"
+        >
+          @if (isSubmitting()) {
+            <ion-spinner name="crescent"></ion-spinner>
+          } @else {
+            Save Account
+          }
+        </ion-button>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>

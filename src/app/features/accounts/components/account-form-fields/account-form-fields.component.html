@@ -1,0 +1,30 @@
+<div class="account-form-fields">
+  <ion-item lines="none" class="form-input">
+    <ion-input
+      label="Name"
+      labelPlacement="floating"
+      [formField]="accountForm().name"
+    ></ion-input>
+  </ion-item>
+
+  @if (accountForm().name().touched() && accountForm().name().invalid()) {
+    <ion-text color="danger">
+      <p class="field-error">{{ accountForm().name().errors()[0].message }}</p>
+    </ion-text>
+  }
+
+  <ion-item lines="none" class="form-input">
+    <ion-input
+      label="Balance"
+      labelPlacement="floating"
+      type="number"
+      [formField]="accountForm().balance"
+    ></ion-input>
+  </ion-item>
+
+  @if (accountForm().balance().touched() && accountForm().balance().invalid()) {
+    <ion-text color="danger">
+      <p class="field-error">{{ accountForm().balance().errors()[0].message }}</p>
+    </ion-text>
+  }
+</div>

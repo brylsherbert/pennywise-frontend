@@ -1,0 +1,15 @@
+@use 'mixins' as *;
+
+.account-form-fields {
+  @include flex-column();
+  gap: 14px;
+}
+
+.form-input {
+  @include apple-form-field();
+}
+
+.field-error {
+  font-size: 12px;
+  margin: -4px 0 0 12px;
+}
