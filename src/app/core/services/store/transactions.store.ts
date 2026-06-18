@@ -17,7 +17,7 @@ import {
 import { API_STATUS, isApiSuccess, isApiSuccessWithData } from '../../models/api-response.model';
 
 const TRANSACTIONS_STORAGE_KEY = 'transactions';
-const DEFAULT_TRANSACTIONS_LIMIT = 10;
+const DEFAULT_TRANSACTIONS_LIMIT = 100;
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +34,7 @@ export class TransactionsStore {
   public readonly nextCursor = this._nextCursor.asReadonly();
   public readonly hasMore = this._hasMore.asReadonly();
   public readonly loading = this._loading.asReadonly();
+  public readonly defaultTransactionsLimit = DEFAULT_TRANSACTIONS_LIMIT;
 
   // Public actions
   public async getAllTransactions(params?: GetAllTransactionsParams) {
@@ -52,12 +53,9 @@ export class TransactionsStore {
         this._hasMore.set(response.pagination.hasMore);
 
         if (!params?.cursor) {
-          // first page — same as response.page === 1
-          this._transactions.set(response?.data);
-          this.storeTransactions(this._transactions());
+          this.storeTransactions(response.data);
         } else {
-          // next pages — merge into existing list
-          this._transactions.set([...this._transactions(), ...response?.data]);
+          this._transactions.set([...this._transactions(), ...response.data]);
         }
       }
     } catch (error) {
@@ -115,7 +113,7 @@ export class TransactionsStore {
 
       if (!isApiSuccessWithData(response, API_STATUS.CREATED)) return false;
 
-      this._transactions.update(transactions => [response.data, ...transactions]);
+      this._transactions.update(transactions => [response?.data?.transaction, ...transactions]);
       return true;
     } catch (error) {
       console.error(`[TransactionsStore] failed to create transaction: `, error);
@@ -129,7 +127,7 @@ export class TransactionsStore {
 
       if (!isApiSuccessWithData(response, API_STATUS.OK)) return false;
 
-      this._transactions.update(transactions => transactions.map(t => (t.id === id ? response.data : t)));
+      this._transactions.update(transactions => transactions.map(t => (t.id === id ? response.data?.transaction : t)));
       return true;
     } catch (error) {
       console.error(`[TransactionsStore] failed to update transaction: `, error);

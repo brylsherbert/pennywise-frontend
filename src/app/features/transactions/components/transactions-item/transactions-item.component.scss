@@ -1,0 +1,182 @@
+@use 'mixins' as *;
+
+.transaction-card {
+  @include glass-background(
+    rgba(255, 255, 255, 0.05),
+    16px,
+    rgba(255, 255, 255, 0.1),
+    1px,
+    0 10px 34px rgba(0, 0, 0, 0.22)
+  );
+  @include flex-row();
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 20px;
+  color: var(--ion-text-color);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:focus-visible {
+    outline: 2px solid var(--ion-color-primary);
+    outline-offset: 3px;
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.transaction-card__icon {
+  @include flex-row();
+  @include flex-center();
+  width: 44px;
+  height: 44px;
+  border-radius: 15px;
+  flex-shrink: 0;
+  background: rgba(var(--ion-color-primary-rgb), 0.15);
+  color: var(--ion-color-primary);
+  border: 1px solid rgba(var(--ion-color-primary-rgb), 0.24);
+
+  ion-icon {
+    width: 21px;
+    height: 21px;
+    font-size: 21px;
+  }
+}
+
+.transaction-card--income .transaction-card__icon {
+  background: rgba(var(--ion-color-success-rgb), 0.15);
+  color: var(--ion-color-success);
+  border-color: rgba(var(--ion-color-success-rgb), 0.24);
+}
+
+.transaction-card--expense .transaction-card__icon {
+  background: rgba(var(--ion-color-danger-rgb), 0.15);
+  color: var(--ion-color-danger);
+  border-color: rgba(var(--ion-color-danger-rgb), 0.24);
+}
+
+.transaction-card--fill .transaction-card__icon {
+  background: rgba(var(--app-fill-color-rgb), 0.15);
+  color: var(--app-fill-color);
+  border-color: rgba(var(--app-fill-color-rgb), 0.24);
+}
+
+.transaction-card__content {
+  @include flex-column();
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.transaction-card__main {
+  @include flex-row();
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.transaction-card__details {
+  min-width: 0;
+}
+
+.transaction-card__type {
+  display: inline-flex;
+  margin-bottom: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ion-color-medium);
+}
+
+.transaction-card__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--ion-text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.transaction-card__amount {
+  @include flex-row();
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ion-text-color);
+}
+
+.transaction-card__amount-prefix {
+  font-size: 12px;
+}
+
+.amount-income {
+  color: var(--ion-color-success);
+}
+
+.amount-expense {
+  color: var(--ion-color-danger);
+}
+
+.amount-fill {
+  color: var(--app-fill-color);
+}
+
+.transaction-card__meta {
+  @include flex-row();
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ion-color-medium);
+}
+
+.transaction-card__separator {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+@media (max-width: 767px) {
+  .transaction-card {
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: 18px;
+  }
+
+  .transaction-card__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+
+    ion-icon {
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+    }
+  }
+
+  .transaction-card__main {
+    align-items: flex-start;
+  }
+
+  .transaction-card__title {
+    font-size: 15px;
+  }
+
+  .transaction-card__amount {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+}

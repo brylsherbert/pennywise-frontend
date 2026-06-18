@@ -1,0 +1,22 @@
+@use 'mixins' as *;
+
+ion-modal {
+  @include apple-modal-shell();
+}
+
+ion-content {
+  @include apple-modal-content();
+}
+
+ion-segment {
+  @include apple-segmented-control();
+}
+
+.transaction-form {
+  @include apple-modal-form();
+}
+
+ion-button[type='submit'] {
+  @include apple-primary-button();
+  margin-top: 6px;
+}

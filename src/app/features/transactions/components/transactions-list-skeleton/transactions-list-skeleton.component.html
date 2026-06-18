@@ -1,0 +1,17 @@
+<div class="transactions-skeleton-list" aria-busy="true" aria-label="Loading transactions">
+  @for (item of skeletonItems; track item) {
+    <article class="transaction-skeleton-card">
+      <div class="transaction-skeleton transaction-skeleton--icon"></div>
+      <div class="transaction-skeleton-card__content">
+        <div class="transaction-skeleton-card__main">
+          <div class="transaction-skeleton-card__details">
+            <div class="transaction-skeleton transaction-skeleton--type"></div>
+            <div class="transaction-skeleton transaction-skeleton--title"></div>
+          </div>
+          <div class="transaction-skeleton transaction-skeleton--amount"></div>
+        </div>
+        <div class="transaction-skeleton transaction-skeleton--meta"></div>
+      </div>
+    </article>
+  }
+</div>

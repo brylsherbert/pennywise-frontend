@@ -1,0 +1,163 @@
+@use 'mixins' as *;
+
+.transaction-form-fields {
+  @include flex-column();
+  gap: 12px;
+}
+
+.form-input {
+  @include apple-form-field();
+}
+
+.field-error {
+  font-size: 12px;
+  margin: -4px 0 0 12px;
+}
+
+.date-picker-card {
+  @include glass-background(
+    rgba(255, 255, 255, 0.04),
+    12px,
+    rgba(255, 255, 255, 0.1)
+  );
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.date-picker-card__header {
+  @include flex-row();
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.date-picker-card__summary {
+  @include flex-row();
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.date-picker-card__icon {
+  @include flex-row();
+  @include flex-center();
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(var(--ion-color-primary-rgb), 0.15);
+  color: var(--ion-color-primary);
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.date-picker-card__text {
+  @include flex-column();
+  gap: 2px;
+  min-width: 0;
+}
+
+.date-picker-card__label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--ion-color-medium);
+}
+
+.date-picker-card__value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ion-text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.today-button {
+  --border-radius: 999px;
+  --padding-start: 10px;
+  --padding-end: 12px;
+  margin: 0;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.date-picker-card__calendar {
+  padding: 4px 8px 14px;
+}
+
+.transaction-datetime {
+  --background: transparent;
+  --wheel-fade-background-rgb: transparent;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+
+  &::part(calendar-day) {
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+
+  &::part(calendar-day):focus,
+  &::part(calendar-day):hover {
+    background: rgba(var(--ion-color-primary-rgb), 0.12);
+  }
+
+  &::part(calendar-day-active) {
+    background: var(--ion-color-primary);
+    color: var(--ion-color-primary-contrast);
+    box-shadow: 0 4px 14px rgba(var(--ion-color-primary-rgb), 0.35);
+    transform: scale(1.05);
+  }
+
+  &::part(calendar-day-today) {
+    border: 1px solid rgba(var(--ion-color-primary-rgb), 0.45);
+    color: var(--ion-color-primary);
+    font-weight: 700;
+  }
+
+  &::part(month-year-button) {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: var(--ion-text-color);
+  }
+
+  &::part(wheel-item) {
+    font-size: 16px;
+  }
+
+  &::part(time-button) {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .date-picker-card__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .date-picker-card__summary {
+    width: 100%;
+  }
+
+  .today-button {
+    align-self: flex-end;
+  }
+
+  .date-picker-card__value {
+    white-space: normal;
+  }
+}

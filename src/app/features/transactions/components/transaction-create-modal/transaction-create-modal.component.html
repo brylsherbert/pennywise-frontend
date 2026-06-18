@@ -1,0 +1,52 @@
+<ion-modal [isOpen]="isOpen()" (didDismiss)="onModalDismiss()">
+  <ng-template>
+    <ion-header mode="ios">
+      <ion-toolbar>
+        <ion-title>New Transaction</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()" aria-label="Close">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding" mode="ios">
+      <ion-segment
+        [value]="formModel().type"
+        (ionChange)="onTypeChange($any($event).detail.value)"
+      >
+        @for (type of transactionTypes; track type) {
+          <ion-segment-button [value]="type">
+            <ion-label>{{ type | titlecase }}</ion-label>
+          </ion-segment-button>
+        }
+      </ion-segment>
+
+      <form class="transaction-form" novalidate (submit)="onSubmit($event)">
+        <app-transaction-form-fields
+          [transactionForm]="transactionForm"
+          [accounts]="accounts()"
+          [budgets]="budgets()"
+          [showAccountField]="showAccountField()"
+          [showBudgetField]="showBudgetField()"
+          [selectedDate]="selectedDate()"
+          [isSelectedToday]="isSelectedToday()"
+          (setTodayClick)="setToday()"
+        />
+
+        <ion-button
+          expand="block"
+          type="submit"
+          [disabled]="isSubmitDisabled() || isSubmitting()"
+        >
+          @if (isSubmitting()) {
+            <ion-spinner name="crescent"></ion-spinner>
+          } @else {
+            Save Transaction
+          }
+        </ion-button>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>

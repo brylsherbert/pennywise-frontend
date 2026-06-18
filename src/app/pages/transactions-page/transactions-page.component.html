@@ -1,0 +1,100 @@
+<app-header [summary]="headerSummary()">Transactions</app-header>
+
+@if (selectedTransaction(); as transaction) {
+  <app-transaction-edit-modal
+    [isOpen]="isEditModalOpen()"
+    [transaction]="transaction"
+    (dismissed)="onEditModalDismissed()"
+  />
+}
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="items-container">
+    <ion-searchbar
+      class="transactions-search"
+      mode="ios"
+      (ionInput)="onSearch($event)"
+      placeholder="Search transactions"
+      debounce="300"
+    ></ion-searchbar>
+
+    <div class="filter-sort-bar">
+      <ion-chip
+        class="filter-chip"
+        [class.filter-chip--active]="isFilterActive()"
+        (click)="openFilter()"
+      >
+        <ion-icon name="funnel-outline"></ion-icon>
+        <ion-label>{{ filterLabel() }}</ion-label>
+      </ion-chip>
+
+      <ion-chip
+        class="filter-chip"
+        [class.filter-chip--active]="isSortActive()"
+        (click)="openSort()"
+      >
+        <ion-icon name="swap-vertical-outline"></ion-icon>
+        <ion-label>{{ sortLabel() }}</ion-label>
+      </ion-chip>
+
+      @if (isFilterActive() || isSortActive()) {
+      <ion-chip class="filter-chip filter-chip--clear" (click)="clearFilters()">
+        <ion-icon name="close-outline"></ion-icon>
+        <ion-label>Clear</ion-label>
+      </ion-chip>
+      }
+    </div>
+
+    @if (isFilterActive() || isSortActive()) {
+    <p class="results-count">
+      Showing {{ filteredCount() }} of {{ transactions().length }} transactions
+    </p>
+    }
+
+    @if (isLoadingTransactions() && transactions().length === 0) {
+      <app-transactions-list-skeleton />
+    } @else {
+      <div class="transactions-list">
+        @for (group of groupedTransactions(); track group.transaction_date) {
+        <ion-item-group>
+          <div class="transaction-date-header">
+            <div>
+              <span class="transaction-date-header__weekday">
+                {{ group.transaction_date | date: 'EEEE' }}
+              </span>
+              <h2 class="transaction-date-header__date">
+                {{ group.transaction_date | date: 'MMM d, y' }}
+              </h2>
+            </div>
+            <span class="transaction-date-header__count">
+              {{ group.transactions.length }}
+              {{ group.transactions.length === 1 ? 'transaction' : 'transactions' }}
+            </span>
+          </div>
+          @for (transaction of group.transactions; track transaction.id) {
+          <app-transactions-item
+            [transaction]="transaction"
+            (selected)="openEditTransactionModal($event)"
+          />
+          }
+        </ion-item-group>
+        } @empty {
+        <ion-item lines="none">
+          <ion-label class="ion-text-center">
+            <p>No transactions found</p>
+          </ion-label>
+        </ion-item>
+        }
+      </div>
+    }
+
+  </div>
+
+  <ion-infinite-scroll mode="ios" (ionInfinite)="loadMore($event)" threshold="100px" [disabled]="!this.hasMoreTransactions() && !this.nextTranscationCursor()">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

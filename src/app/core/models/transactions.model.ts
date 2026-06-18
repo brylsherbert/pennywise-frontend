@@ -1,5 +1,7 @@
 import { ApiPaginatedSuccessResponse, ApiSuccessResponse } from './api-response.model';
 import { CursorPaginationParams } from './pagination.model';
+import { Account } from './accounts.model';
+import { Budget } from './budgets.model';
 
 export type TransactionType = 'income' | 'expense' | 'fill';
 
@@ -18,6 +20,11 @@ export interface Transaction {
     updated_at: string;
 }
 
+export interface TransactionDateGroup {
+    transaction_date: string;
+    transactions: Transaction[];
+}
+
 // ─── Requests ──────────────────────────────────────────────────────────────
 
 interface TransactionRequest {
@@ -26,7 +33,7 @@ interface TransactionRequest {
     title: string;
     type: TransactionType;
     amount: number;
-    transaction_data: string
+    transaction_date: string
 }
 
 
@@ -37,10 +44,28 @@ export type GetAllTransactionsParams = CursorPaginationParams;
 
 // ─── Responses ───────────────────────────────────────────────────────────────
 
+interface CreateTransactionResponseData {
+    transaction: Transaction,
+    account?: Account,
+    budget?: Budget
+}
+
+interface UpdateTransactionResponseData {
+    transaction: Transaction,
+    updated_accounts?: {
+        old_account?: Account,
+        new_account?: Account
+    },
+    updated_budgets?: {
+        old_budget?: Budget,
+        new_budget?: Budget
+    }
+}
+
 export type GetAllTransactionsResponse = ApiPaginatedSuccessResponse<Transaction[], 200>;
 export type GetAllTransactionsByBudgetIdResponse = ApiSuccessResponse<Transaction[], 200>;
 export type GetAllTransactionsByAccountIdResponse = ApiSuccessResponse<Transaction[], 200>;
 export type GetTransactionResponse = ApiSuccessResponse<Transaction, 200>;
-export type CreateTransactionResponse = ApiSuccessResponse<Transaction, 201>;
-export type UpdateTransactionResponse = ApiSuccessResponse<Transaction, 200>;
+export type CreateTransactionResponse = ApiSuccessResponse<CreateTransactionResponseData, 201>;
+export type UpdateTransactionResponse = ApiSuccessResponse<UpdateTransactionResponseData, 200>;
 export type DeleteTransactionResponse = ApiSuccessResponse<null, 200>;

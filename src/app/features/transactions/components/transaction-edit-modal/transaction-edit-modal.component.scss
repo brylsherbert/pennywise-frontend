@@ -1,0 +1,55 @@
+@use 'mixins' as *;
+
+ion-modal {
+  @include apple-modal-shell();
+}
+
+ion-content {
+  @include apple-modal-content();
+}
+
+.type-badge {
+  @include apple-type-badge();
+}
+
+.type-badge__chip {
+  --background: rgba(var(--ion-color-medium-rgb), 0.15);
+  margin: 0;
+  pointer-events: none;
+
+  ion-label {
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+
+  &--income {
+    --background: rgba(var(--ion-color-success-rgb), 0.15);
+    --color: var(--ion-color-success);
+  }
+
+  &--expense {
+    --background: rgba(var(--ion-color-danger-rgb), 0.15);
+    --color: var(--ion-color-danger);
+  }
+
+  &--fill {
+    --background: rgba(var(--app-fill-color-rgb), 0.15);
+    --color: var(--app-fill-color);
+  }
+}
+
+.transaction-form {
+  @include apple-modal-form();
+}
+
+.modal-actions {
+  @include apple-modal-actions();
+}
+
+ion-button[type='submit'] {
+  @include apple-primary-button();
+}
+
+.delete-button {
+  @include apple-danger-clear-button();
+}

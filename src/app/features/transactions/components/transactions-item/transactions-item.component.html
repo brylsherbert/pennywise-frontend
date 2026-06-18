@@ -1,0 +1,41 @@
+<article
+  class="transaction-card"
+  [class.transaction-card--income]="type() === 'income'"
+  [class.transaction-card--expense]="type() === 'expense'"
+  [class.transaction-card--fill]="type() === 'fill'"
+  role="button"
+  tabindex="0"
+  (click)="handleSelect()"
+  (keydown)="handleKeydown($event)"
+>
+  <div class="transaction-card__icon" aria-hidden="true">
+    <ion-icon [name]="typeIcon()"></ion-icon>
+  </div>
+
+  <div class="transaction-card__content">
+    <div class="transaction-card__main">
+      <div class="transaction-card__details">
+        <span class="transaction-card__type">{{ typeLabel() }}</span>
+        <h2 class="transaction-card__title">{{ title() }}</h2>
+      </div>
+
+      <div class="transaction-card__amount" [class]="amountClass()">
+        <span class="transaction-card__amount-prefix">{{ amountPrefix() }}</span>
+        <span>{{ amountValue() | currency }}</span>
+      </div>
+    </div>
+
+    @if (subtitleParts().length > 0) {
+      <p class="transaction-card__meta">
+        @for (part of subtitleParts(); track $index; let i = $index) {
+          @if (i > 0) { <span class="transaction-card__separator">·</span> }
+          @if (part.kind === 'date') {
+            <span>{{ part.value | date: 'mediumDate' }}</span>
+          } @else {
+            <span>{{ part.value }}</span>
+          }
+        }
+      </p>
+    }
+  </div>
+</article>

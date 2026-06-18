@@ -1,0 +1,66 @@
+<ion-modal [isOpen]="isOpen()" (didDismiss)="onModalDismiss()">
+  <ng-template>
+    <ion-header mode="ios">
+      <ion-toolbar>
+        <ion-title>Edit Transaction</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()" aria-label="Close">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding" mode="ios">
+      <div class="type-badge" aria-label="Transaction type">
+        <ion-chip class="type-badge__chip" [class]="'type-badge__chip--' + selectedType()">
+          <ion-label>{{ selectedType() | titlecase }}</ion-label>
+        </ion-chip>
+      </div>
+
+      <form class="transaction-form" novalidate (submit)="onSubmit($event)">
+        <app-transaction-form-fields
+          [transactionForm]="transactionForm"
+          [accounts]="accounts()"
+          [budgets]="budgets()"
+          [showAccountField]="showAccountField()"
+          [showBudgetField]="showBudgetField()"
+          [selectedDate]="selectedDate()"
+          [isSelectedToday]="isSelectedToday()"
+          (setTodayClick)="setToday()"
+        />
+
+        <div class="modal-actions">
+          <ion-button
+            expand="block"
+            type="submit"
+            [disabled]="isSubmitDisabled() || isActionDisabled()"
+          >
+            @if (isSubmitting()) {
+              <ion-spinner name="crescent"></ion-spinner>
+            } @else {
+              Save Changes
+            }
+          </ion-button>
+
+          <ion-button
+            class="delete-button"
+            expand="block"
+            fill="clear"
+            color="danger"
+            type="button"
+            [disabled]="isActionDisabled()"
+            (click)="onDelete()"
+          >
+            @if (isDeleting()) {
+              <ion-spinner name="crescent"></ion-spinner>
+            } @else {
+              <ion-icon slot="start" name="trash-outline" aria-hidden="true"></ion-icon>
+              Delete Transaction
+            }
+          </ion-button>
+        </div>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>

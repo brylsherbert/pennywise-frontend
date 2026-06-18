@@ -1,0 +1,107 @@
+<div class="transaction-form-fields">
+  <ion-item lines="none" class="form-input">
+    <ion-input
+      label="Title"
+      labelPlacement="floating"
+      [formField]="transactionForm().title"
+    ></ion-input>
+  </ion-item>
+
+  @if (transactionForm().title().touched() && transactionForm().title().invalid()) {
+    <ion-text color="danger">
+      <p class="field-error">{{ transactionForm().title().errors()[0].message }}</p>
+    </ion-text>
+  }
+
+  <ion-item lines="none" class="form-input">
+    <ion-input
+      label="Amount"
+      labelPlacement="floating"
+      type="number"
+      [formField]="transactionForm().amount"
+    ></ion-input>
+  </ion-item>
+
+  @if (transactionForm().amount().touched() && transactionForm().amount().invalid()) {
+    <ion-text color="danger">
+      <p class="field-error">{{ transactionForm().amount().errors()[0].message }}</p>
+    </ion-text>
+  }
+
+  @if (showAccountField()) {
+    <ion-item lines="none" class="form-input">
+      <ion-select
+        label="Account"
+        labelPlacement="floating"
+        interface="action-sheet"
+        [formField]="transactionForm().account_id"
+      >
+        <ion-select-option value="">None</ion-select-option>
+        @for (account of accounts(); track account.id) {
+          <ion-select-option [value]="account.id">{{ account.name }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+  }
+
+  @if (showBudgetField()) {
+    <ion-item lines="none" class="form-input">
+      <ion-select
+        label="Budget"
+        labelPlacement="floating"
+        interface="action-sheet"
+        [formField]="transactionForm().budget_id"
+      >
+        <ion-select-option value="">None</ion-select-option>
+        @for (budget of budgets(); track budget.id) {
+          <ion-select-option [value]="budget.id">{{ budget.name }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+  }
+
+  <section class="date-picker-card">
+    <div class="date-picker-card__header">
+      <div class="date-picker-card__summary">
+        <div class="date-picker-card__icon">
+          <ion-icon name="calendar-clear-outline" aria-hidden="true"></ion-icon>
+        </div>
+        <div class="date-picker-card__text">
+          <span class="date-picker-card__label">Transaction Date</span>
+          <span class="date-picker-card__value">
+            {{ selectedDate() | date: 'EEEE, MMM d, yyyy' }}
+          </span>
+        </div>
+      </div>
+
+      <ion-button
+        class="today-button"
+        fill="outline"
+        size="small"
+        [color]="isSelectedToday() ? 'primary' : 'medium'"
+        (click)="onSetToday()"
+      >
+        <ion-icon slot="start" name="today-outline" aria-hidden="true"></ion-icon>
+        Today
+      </ion-button>
+    </div>
+
+    <div class="date-picker-card__calendar">
+      <ion-datetime
+        class="transaction-datetime"
+        presentation="date"
+        size="cover"
+        [preferWheel]="false"
+        [showDefaultButtons]="false"
+        [firstDayOfWeek]="0"
+        [formField]="transactionForm().transaction_date"
+      ></ion-datetime>
+    </div>
+  </section>
+
+  @if (transactionForm().transaction_date().touched() && transactionForm().transaction_date().invalid()) {
+    <ion-text color="danger">
+      <p class="field-error">{{ transactionForm().transaction_date().errors()[0].message }}</p>
+    </ion-text>
+  }
+</div>
