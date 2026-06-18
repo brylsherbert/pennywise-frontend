@@ -1,0 +1,418 @@
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin main-title {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+@mixin white-border {
+    border: 1px solid #fff;
+}
+
+@mixin border-radius {
+    border-radius: 16px;
+}
+
+@mixin app-accent-color {
+    color: var(--app-accent);
+}
+
+@mixin app-accent-surface($bg-alpha: 0.14, $border-alpha: 0.24) {
+    background: rgba(var(--app-accent-rgb), $bg-alpha);
+    color: var(--app-accent);
+    border-color: rgba(var(--app-accent-rgb), $border-alpha);
+}
+
+@mixin app-accent-button-gradient {
+    background: linear-gradient(135deg, var(--app-accent), var(--app-accent-tint));
+    color: var(--app-accent-contrast);
+}
+
+@mixin app-tab-content-bottom-spacing {
+    padding-bottom: var(--app-tab-content-bottom-spacing);
+}
+
+@mixin glass-background(
+        $bg: rgba(255, 255, 255, 0.12),
+        $blur: 16px,
+        $border-color: rgba(255, 255, 255, 0.15),
+        $border-width: 1px,
+        $shadow: 0 8px 32px rgba(0, 0, 0, 0.25)
+    ) {
+    background: $bg;
+    border: $border-width solid $border-color;
+    box-shadow: $shadow;
+}
+
+@mixin budget-health-color-variants {
+    &.budget-health--not-started {
+        color: var(--ion-color-medium);
+    }
+
+    &.budget-health--critical {
+        color: var(--ion-color-danger);
+    }
+
+    &.budget-health--low,
+    &.budget-health--watch {
+        color: var(--ion-color-warning);
+    }
+
+    &.budget-health--healthy,
+    &.budget-health--funded {
+        color: var(--ion-color-success);
+    }
+}
+
+@mixin apple-list-container {
+    @include flex-column();
+    @include app-tab-content-bottom-spacing();
+    gap: 14px;
+    padding-inline: var(--ios-spacing-md, 16px);
+    padding-top: 0;
+}
+
+@mixin apple-searchbar {
+    padding: 0;
+    margin: 0 0 2px;
+    --background: rgba(255, 255, 255, 0.07);
+    --border-radius: 16px;
+    --box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    --color: var(--ion-text-color);
+    --placeholder-color: var(--ion-color-medium);
+    --icon-color: var(--ion-color-medium);
+    --clear-button-color: var(--ion-color-medium);
+}
+
+@mixin apple-filter-sort-bar {
+    @include flex-row();
+    align-items: center;
+    gap: 8px;
+    padding: 0 0 2px;
+    flex-wrap: wrap;
+}
+
+@mixin apple-filter-chip {
+    --background: rgba(255, 255, 255, 0.06);
+    --color: var(--ion-color-medium);
+    margin: 0;
+    min-height: 36px;
+    padding-inline: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+
+    ion-icon {
+        font-size: 15px;
+    }
+
+    &:active {
+        transform: scale(0.97);
+    }
+
+    &--active {
+        --background: rgba(var(--app-accent-rgb), 0.18);
+        --color: var(--app-accent);
+        border-color: rgba(var(--app-accent-rgb), 0.32);
+    }
+
+    &--clear {
+        --background: rgba(var(--ion-color-danger-rgb), 0.14);
+        --color: var(--ion-color-danger);
+        border-color: rgba(var(--ion-color-danger-rgb), 0.28);
+    }
+}
+
+@mixin apple-grouped-list {
+    @include flex-column();
+    gap: 16px;
+}
+
+@mixin apple-item-group {
+    @include flex-column();
+    gap: 8px;
+}
+
+@mixin apple-section-header {
+    @include flex-row();
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 4px 4px 0;
+}
+
+@mixin apple-section-eyebrow {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    @include app-accent-color();
+}
+
+@mixin apple-section-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: var(--ion-text-color);
+}
+
+@mixin apple-section-count {
+    flex-shrink: 0;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ion-color-medium);
+}
+
+@mixin apple-results-count {
+    margin: -2px 0 0 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ion-color-medium);
+    letter-spacing: 0.2px;
+}
+
+@mixin apple-empty-item {
+    --background: rgba(255, 255, 255, 0.05);
+    --border-radius: 16px;
+    --padding-start: 16px;
+    --inner-padding-end: 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@mixin apple-list-page-mobile {
+    .items-container {
+        gap: 10px;
+        padding-inline: var(--ios-spacing-sm, 8px);
+        padding-top: 0;
+    }
+
+    ion-searchbar {
+        --border-radius: 16px;
+        --padding-start: var(--ios-spacing-xs, 4px);
+        --padding-end: var(--ios-spacing-xs, 4px);
+    }
+
+    .filter-sort-bar {
+        gap: 6px;
+    }
+
+    .filter-chip {
+        min-height: 34px;
+        padding-inline: 10px;
+        font-size: 12px;
+    }
+
+    .apple-section-header,
+    .transaction-date-header,
+    .budget-category-header {
+        align-items: flex-start;
+        padding-inline: 2px;
+    }
+
+    .apple-section-title,
+    .transaction-date-header__date,
+    .budget-category-header__title {
+        font-size: 18px;
+    }
+
+    .apple-section-count,
+    .transaction-date-header__count,
+    .budget-category-header__count {
+        padding: 5px 9px;
+        font-size: 11px;
+    }
+}
+
+@mixin apple-modal-shell {
+    --border-radius: 0;
+    --background: var(--ion-background-color);
+
+    ion-toolbar {
+        --background: rgba(20, 20, 20, 0.78);
+        --border-width: 0;
+        --color: var(--ion-text-color);
+    }
+
+    ion-title {
+        font-size: 17px;
+        font-weight: 800;
+        letter-spacing: -0.2px;
+    }
+
+    ion-buttons ion-button {
+        --border-radius: 999px;
+        --background-hover: rgba(255, 255, 255, 0.08);
+        --background-activated: rgba(255, 255, 255, 0.12);
+        color: var(--ion-color-medium);
+    }
+}
+
+@mixin apple-modal-content {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 18px;
+    --padding-bottom: 24px;
+}
+
+@mixin apple-modal-form {
+    @include flex-column();
+    gap: 14px;
+}
+
+@mixin apple-modal-actions {
+    @include flex-column();
+    gap: 10px;
+    margin-top: 18px;
+}
+
+@mixin apple-primary-button {
+    --border-radius: 999px;
+    --box-shadow: none;
+    min-height: 52px;
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.1px;
+    text-transform: none;
+
+    &::part(native) {
+        @include app-accent-button-gradient();
+    }
+}
+
+@mixin apple-danger-clear-button {
+    --border-radius: 999px;
+    --background: rgba(var(--ion-color-danger-rgb), 0.08);
+    --background-hover: rgba(var(--ion-color-danger-rgb), 0.14);
+    --background-activated: rgba(var(--ion-color-danger-rgb), 0.18);
+    --color: var(--ion-color-danger);
+    min-height: 48px;
+    margin: 0;
+    border: 1px solid rgba(var(--ion-color-danger-rgb), 0.24);
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: none;
+
+    ion-icon {
+        font-size: 18px;
+    }
+}
+
+@mixin apple-form-field {
+    --background: rgba(255, 255, 255, 0.06);
+    --border-radius: 18px;
+    --padding-start: 14px;
+    --inner-padding-end: 14px;
+    --min-height: 62px;
+    margin: 0;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+@mixin apple-segmented-control {
+    padding: 4px;
+    margin-bottom: 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    ion-segment-button {
+        --border-radius: 14px;
+        --indicator-color: rgba(255, 255, 255, 0.14);
+        --color: var(--ion-color-medium);
+        --color-checked: var(--ion-text-color);
+        min-height: 38px;
+        font-weight: 800;
+        letter-spacing: -0.1px;
+    }
+}
+
+@mixin apple-type-badge {
+    @include flex-row();
+    justify-content: center;
+    margin-bottom: 16px;
+
+    ion-chip {
+        margin: 0;
+        min-height: 36px;
+        padding-inline: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        pointer-events: none;
+
+        ion-label {
+            font-weight: 800;
+            letter-spacing: 0.1px;
+        }
+    }
+}
+
+/// Ionic tab bar — maps glass styles to Ionic CSS variables.
+@mixin ion-tab-bar-glass(
+        $bg: rgba(30, 30, 30, 0.64),
+        $blur: 20px,
+        $border-color: rgba(255, 255, 255, 0.12)
+    ) 
+    {
+    --background: #{$bg};
+    --border: 0;
+    border: 1px solid $border-color;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+@mixin apple-fab-button {
+    @include glass-background(
+        rgba(30, 30, 30, 0.86),
+        20px,
+        rgba(255, 255, 255, 0.14),
+        1px,
+        0 8px 32px rgba(0, 0, 0, 0.3)
+    );
+    --background: transparent;
+    --background-activated: transparent;
+    --background-hover: transparent;
+    --box-shadow: none;
+    --color: var(--app-accent);
+    width: 50px;
+    height: 50px;
+    border-radius: 17px;
+    overflow: hidden;
+
+    &::part(native) {
+        background: transparent;
+        box-shadow: none;
+    }
+
+    ion-icon {
+        width: 24px;
+        height: 24px;
+        font-size: 24px;
+    }
+}

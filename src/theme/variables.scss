@@ -1,2 +1,21 @@
 // For information on how to create your own theme, please refer to:
 // https://ionicframework.com/docs/theming/
+
+:root {
+  --app-accent: #2dd36f;
+  --app-accent-rgb: 45, 211, 111;
+  --app-accent-contrast: #06130b;
+  --app-accent-contrast-rgb: 6, 19, 11;
+  --app-accent-shade: #28ba62;
+  --app-accent-tint: #56dc89;
+  --app-fill-color: #3b82f6;
+  --app-fill-color-rgb: 59, 130, 246;
+  --app-tab-content-bottom-spacing: 0px;
+
+  --ion-color-primary: var(--app-accent);
+  --ion-color-primary-rgb: var(--app-accent-rgb);
+  --ion-color-primary-contrast: var(--app-accent-contrast);
+  --ion-color-primary-contrast-rgb: var(--app-accent-contrast-rgb);
+  --ion-color-primary-shade: var(--app-accent-shade);
+  --ion-color-primary-tint: var(--app-accent-tint);
+}

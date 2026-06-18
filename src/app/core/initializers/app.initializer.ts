@@ -1,32 +1,24 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthStore } from '../services/store/auth.store';
-import { AccountsStore } from '../services/store/accounts.store';
-import { BudgetsStore } from '../services/store/budgets.store';
-import { CategoriesStore } from '../services/store/categories.store';
-import { TransactionsStore } from '../services/store/transactions.store';
+import { Router } from '@angular/router';
+import { AppBootstrapService } from '../services/app-bootstrap.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppInitializer {
-  private readonly authStore = inject(AuthStore);
-  private readonly accountsStore = inject(AccountsStore);
-  private readonly budgetsStore = inject(BudgetsStore);
-  private readonly categoriesStore = inject(CategoriesStore);
-  private readonly transactionsStore = inject(TransactionsStore);
+  private readonly router = inject(Router);
+  private authStore = inject(AuthStore);
+  private readonly appBootstrapService = inject(AppBootstrapService);
 
   async initializeApp(): Promise<void> {
     this.authStore.initializeAuthDataFromStorage();
 
     if (!this.authStore.isAuthenticated()) {
+      await this.router.navigate(['/auth']);
       return;
     }
 
-    await Promise.all([
-      this.accountsStore.initializeAccountsFromStorage(),
-      this.budgetsStore.initializeBudgetsFromStorage(),
-      this.categoriesStore.initializeCategoriesFromStorage(),
-      this.transactionsStore.initializeTransactionsFromStorage(),
-    ]);
+    await this.appBootstrapService.initializeAppData();
   }
 }
