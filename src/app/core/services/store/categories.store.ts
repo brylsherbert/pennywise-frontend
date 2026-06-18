@@ -34,11 +34,10 @@ export class CategoriesStore {
       const response: GetAllCategoriesResponse = await firstValueFrom(this.categoriesApi.getAllCategories());
 
       if (isApiSuccessWithData(response, API_STATUS.OK)) {
-        this._categories.set(response?.data);
-        this.storeCategories(this._categories());
+        this.storeCategories(response.data);
       }
 
-      return this._categories.set([]);
+      return this._categories();
     } catch (error) {
       console.error(`[CategoriesStore] failed to get categories: `, error);
       throw error;
@@ -62,14 +61,14 @@ export class CategoriesStore {
     }
   }
 
-  public async createCategory(body: CreateCategoryRequest) {
+  public async createCategory(body: CreateCategoryRequest): Promise<Category | null> {
     try {
       const response: CreateCategoryResponse = await firstValueFrom(this.categoriesApi.createCategory(body));
 
-      if (!isApiSuccessWithData(response, API_STATUS.CREATED)) return false;
+      if (!isApiSuccessWithData(response, API_STATUS.CREATED)) return null;
 
       this._categories.update(categories => [response.data, ...categories]);
-      return true;
+      return response.data;
     } catch (error) {
       console.error(`[CategoriesStore] failed to create category: `, error);
       throw error;

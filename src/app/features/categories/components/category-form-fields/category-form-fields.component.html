@@ -1,0 +1,47 @@
+<div class="category-form-fields">
+  <ion-item lines="none" class="form-input">
+    <ion-input
+      label="Name"
+      labelPlacement="floating"
+      [formField]="categoryForm().name"
+    ></ion-input>
+  </ion-item>
+
+  @if (categoryForm().name().touched() && categoryForm().name().invalid()) {
+    <ion-text color="danger">
+      <p class="field-error">{{ categoryForm().name().errors()[0].message }}</p>
+    </ion-text>
+  }
+
+  <div class="color-picker">
+    <span id="category-color-label" class="color-picker__label">Color</span>
+    <div
+      class="color-picker__options"
+      role="radiogroup"
+      aria-labelledby="category-color-label"
+    >
+      @for (color of colorPresets; track color) {
+        <button
+          type="button"
+          class="color-picker__option"
+          [class.color-picker__option--selected]="isColorSelected(color)"
+          [style.background-color]="color"
+          role="radio"
+          [attr.aria-checked]="ariaChecked(color)"
+          [attr.aria-label]="colorLabel(color)"
+          [attr.title]="colorLabel(color)"
+          [tabindex]="isColorSelected(color) ? 0 : -1"
+          (click)="selectColor(color)"
+        >
+          <span class="color-picker__option-label">{{ colorLabel(color) }}</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (categoryForm().color().touched() && categoryForm().color().invalid()) {
+    <ion-text color="danger">
+      <p class="field-error">{{ categoryForm().color().errors()[0].message }}</p>
+    </ion-text>
+  }
+</div>

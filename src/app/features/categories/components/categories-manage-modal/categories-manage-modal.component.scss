@@ -1,0 +1,52 @@
+@use 'mixins' as *;
+
+ion-modal {
+  @include apple-modal-shell();
+}
+
+ion-content {
+  @include apple-modal-content();
+}
+
+.loading-state {
+  @include flex-row();
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.empty-state {
+  margin: 0;
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--ion-color-medium);
+}
+
+.categories-list {
+  @include flex-column();
+  gap: 8px;
+  background: transparent;
+  padding: 0;
+
+  ion-item {
+    @include apple-empty-item();
+    --min-height: 54px;
+    --background-hover: rgba(255, 255, 255, 0.08);
+    --background-activated: rgba(255, 255, 255, 0.1);
+    margin: 0;
+  }
+
+  ion-label {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--ion-text-color);
+  }
+}
+
+.category-color {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-inline-end: 8px;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+}
