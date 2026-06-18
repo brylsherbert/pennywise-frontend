@@ -1,0 +1,50 @@
+@use 'mixins' as *;
+
+ion-modal {
+  @include apple-modal-shell();
+}
+
+ion-content {
+  @include apple-modal-content();
+}
+
+.user-form,
+.user-form-fields {
+  @include flex-column();
+}
+
+.user-form {
+  gap: 16px;
+}
+
+.form-helper {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ion-color-medium);
+}
+
+.user-form-fields {
+  gap: 14px;
+}
+
+.form-input {
+  @include apple-form-field();
+}
+
+.field-error {
+  margin: -4px 0 0 12px;
+  font-size: 12px;
+}
+
+.modal-actions {
+  @include apple-modal-actions();
+}
+
+ion-button[type='submit'] {
+  @include apple-primary-button();
+}
+
+.delete-button {
+  @include apple-danger-clear-button();
+}

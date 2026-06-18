@@ -1,0 +1,123 @@
+<app-header>Settings</app-header>
+
+<app-categories-manage-modal
+  [isOpen]="isCategoriesModalOpen()"
+  (dismissed)="closeCategoriesModal()"
+/>
+
+@if (user(); as currentUser) {
+  <app-user-edit-modal
+    [isOpen]="isUserEditModalOpen()"
+    [user]="currentUser"
+    (dismissed)="closeUserEditModal()"
+  />
+}
+
+<ion-content id="settings-content" [fullscreen]="true">
+  <div class="settings-content-container">
+    <section class="account-card" aria-labelledby="settings-account-card-heading">
+      <img
+        src="assets/pennywise-logo.png"
+        width="128"
+        height="128"
+        alt=""
+        aria-hidden="true"
+        class="account-card__logo"
+      />
+
+      <div class="account-card__content">
+        <h2 id="settings-account-card-heading" class="account-card__title">
+          {{ accountCardTitle() }}
+        </h2>
+        <p class="account-card__subtitle">{{ accountCardSubtitle() }}</p>
+      </div>
+    </section>
+
+    <section class="settings-section" aria-labelledby="settings-account-heading">
+      <h3 id="settings-account-heading" class="section-title">Account</h3>
+
+      <div class="settings-card">
+        @if (!isAuthenticated()) {
+          <button type="button" class="settings-item" (click)="routeToLoginPage()">
+            <span class="item-icon item-icon--green">
+              <ion-icon name="log-in-outline" aria-hidden="true"></ion-icon>
+            </span>
+            <span class="item-label">Login</span>
+            <ion-icon name="chevron-forward-outline" class="item-chevron" aria-hidden="true"></ion-icon>
+          </button>
+
+          <button type="button" class="settings-item" (click)="routeToSignupPage()">
+            <span class="item-icon item-icon--purple">
+              <ion-icon name="reader-outline" aria-hidden="true"></ion-icon>
+            </span>
+            <span class="item-label">Sign Up</span>
+            <ion-icon name="chevron-forward-outline" class="item-chevron" aria-hidden="true"></ion-icon>
+          </button>
+        } @else {
+          <button type="button" class="settings-item" (click)="openUserEditModal()">
+            <span class="item-icon item-icon--green">
+              <ion-icon name="person-circle-outline" aria-hidden="true"></ion-icon>
+            </span>
+            <div class="item-label-group">
+              <span class="item-label">Profile</span>
+              <span class="item-sublabel">{{ displayName() }}</span>
+            </div>
+            <ion-icon name="chevron-forward-outline" class="item-chevron" aria-hidden="true"></ion-icon>
+          </button>
+        }
+      </div>
+    </section>
+
+    <section class="settings-section" aria-labelledby="settings-application-heading">
+      <h3 id="settings-application-heading" class="section-title">Application</h3>
+
+      <div class="settings-card">
+        <button type="button" class="settings-item" (click)="openCategoriesModal()">
+          <span class="item-icon item-icon--purple">
+            <ion-icon name="pricetags-outline" aria-hidden="true"></ion-icon>
+          </span>
+          <span class="item-label">Manage Categories</span>
+          <ion-icon name="chevron-forward-outline" class="item-chevron" aria-hidden="true"></ion-icon>
+        </button>
+
+        <button type="button" class="settings-item" (click)="routeToAccountsPage()">
+          <span class="item-icon item-icon--orange">
+            <ion-icon name="wallet-outline" aria-hidden="true"></ion-icon>
+          </span>
+          <span class="item-label">Manage Accounts</span>
+          <ion-icon name="chevron-forward-outline" class="item-chevron" aria-hidden="true"></ion-icon>
+        </button>
+
+        <button type="button" class="settings-item" (click)="routeToBudgetsPage()">
+          <span class="item-icon item-icon--green">
+            <ion-icon name="pie-chart-outline" aria-hidden="true"></ion-icon>
+          </span>
+          <span class="item-label">Manage Budgets</span>
+          <ion-icon name="chevron-forward-outline" class="item-chevron" aria-hidden="true"></ion-icon>
+        </button>
+
+        <button type="button" class="settings-item" (click)="routeToTransactionsPage()">
+          <span class="item-icon item-icon--blue">
+            <ion-icon name="swap-horizontal-outline" aria-hidden="true"></ion-icon>
+          </span>
+          <span class="item-label">Manage Transactions</span>
+          <ion-icon name="chevron-forward-outline" class="item-chevron" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+    </section>
+
+    @if (isAuthenticated()) {
+      <section class="settings-section" aria-label="Sign out">
+        <div class="settings-card">
+          <button type="button" class="settings-item sign-out-item" (click)="handleLogout()">
+            <span class="item-icon item-icon--danger">
+              <ion-icon name="log-out-outline" aria-hidden="true"></ion-icon>
+            </span>
+            <span class="item-label">Sign Out</span>
+            <ion-icon name="chevron-forward-outline" class="item-chevron" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+      </section>
+    }
+  </div>
+</ion-content>

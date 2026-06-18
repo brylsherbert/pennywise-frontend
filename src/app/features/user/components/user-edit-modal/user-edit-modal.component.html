@@ -1,0 +1,103 @@
+<ion-modal [isOpen]="isOpen()" (didDismiss)="onModalDismiss()">
+  <ng-template>
+    <ion-header mode="ios">
+      <ion-toolbar>
+        <ion-title>Edit Profile</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()" aria-label="Close">
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding" mode="ios">
+      <form class="user-form" novalidate (submit)="onSubmit($event)">
+        <p class="form-helper">
+          Update your username and set a new password to save profile changes.
+        </p>
+
+        <div class="user-form-fields">
+          <ion-item lines="none" class="form-input">
+            <ion-input
+              label="Username"
+              labelPlacement="floating"
+              [formField]="userForm().username"
+            ></ion-input>
+          </ion-item>
+
+          @if (userForm().username().touched() && userForm().username().invalid()) {
+            <ion-text color="danger">
+              <p class="field-error">{{ userForm().username().errors()[0].message }}</p>
+            </ion-text>
+          }
+
+          <ion-item lines="none" class="form-input">
+            <ion-input
+              label="New Password"
+              labelPlacement="floating"
+              type="password"
+              autocomplete="new-password"
+              [formField]="userForm().password"
+            ></ion-input>
+          </ion-item>
+
+          @if (userForm().password().touched() && userForm().password().invalid()) {
+            <ion-text color="danger">
+              <p class="field-error">{{ userForm().password().errors()[0].message }}</p>
+            </ion-text>
+          }
+
+          <ion-item lines="none" class="form-input">
+            <ion-input
+              label="Confirm Password"
+              labelPlacement="floating"
+              type="password"
+              autocomplete="new-password"
+              [formField]="userForm().confirmPassword"
+            ></ion-input>
+          </ion-item>
+
+          @if (userForm().confirmPassword().touched() && userForm().confirmPassword().invalid()) {
+            <ion-text color="danger">
+              <p class="field-error">{{ userForm().confirmPassword().errors()[0].message }}</p>
+            </ion-text>
+          } @else if (userForm().confirmPassword().touched() && passwordsMismatch()) {
+            <ion-text color="danger">
+              <p class="field-error">Passwords do not match</p>
+            </ion-text>
+          }
+        </div>
+
+        <div class="modal-actions">
+          <ion-button
+            expand="block"
+            type="submit"
+            [disabled]="isSubmitDisabled() || isActionDisabled()"
+          >
+            @if (isSubmitting()) {
+              <ion-spinner name="crescent"></ion-spinner>
+            }
+            <span>Save Changes</span>
+          </ion-button>
+
+          <ion-button
+            class="delete-button"
+            expand="block"
+            fill="clear"
+            color="danger"
+            type="button"
+            [disabled]="isActionDisabled()"
+            (click)="onDelete()"
+          >
+            @if (isDeleting()) {
+              <ion-spinner name="crescent"></ion-spinner>
+            }
+            <ion-icon slot="start" name="trash-outline" aria-hidden="true"></ion-icon>
+            <span>Delete Account</span>
+          </ion-button>
+        </div>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>
