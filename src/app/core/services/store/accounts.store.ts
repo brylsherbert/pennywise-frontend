@@ -5,7 +5,7 @@ import { Account, GetAccountResponse, GetAllAccountsResponse, GetAllAccountsPara
 import { API_STATUS, isApiSuccess, isApiSuccessWithData } from '../../models/api-response.model';
 
 const ACCOUNTS_STORAGE_KEY = 'accounts';
-const DEFAULT_ACCOUNTS_LIMIT = 10;
+const DEFAULT_ACCOUNTS_LIMIT = 100;
 
 @Injectable({
   providedIn: 'root',
