@@ -1,0 +1,151 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+}
+
+.auth-content {
+  --padding-start: 18px;
+  --padding-end: 18px;
+  --padding-top: calc(var(--ion-safe-area-top, 0px) + 20px);
+  --padding-bottom: calc(var(--ion-safe-area-bottom, 0px) + 20px);
+
+  &::part(background) {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(var(--app-accent-rgb), 0.22), transparent 34%),
+      radial-gradient(circle at 0% 86%, rgba(var(--app-fill-color-rgb), 0.14), transparent 34%),
+      var(--ion-background-color);
+  }
+}
+
+.auth-page {
+  @include flex-column();
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100dvh - var(--ion-safe-area-top, 0px) - var(--ion-safe-area-bottom, 0px) - 40px);
+  width: 100%;
+}
+
+.auth-card {
+  @include glass-background(
+    rgba(255, 255, 255, 0.06),
+    16px,
+    rgba(255, 255, 255, 0.12),
+    1px,
+    0 14px 44px rgba(0, 0, 0, 0.32)
+  );
+  @include flex-column();
+  gap: 22px;
+  width: min(100%, 430px);
+  padding: 28px 22px 22px;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.auth-header {
+  @include flex-column();
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    color: var(--ion-text-color);
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.7px;
+    line-height: 1.08;
+  }
+
+  p {
+    max-width: 310px;
+    margin: 0;
+    color: var(--ion-color-medium);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+}
+
+.auth-logo {
+  width: min(132px, 47vw);
+  height: auto;
+  margin-bottom: 4px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.28));
+}
+
+.auth-eyebrow {
+  color: var(--app-accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+ion-segment {
+  @include apple-segmented-control();
+  margin-bottom: 0;
+}
+
+.auth-form,
+.form-input-container {
+  @include flex-column();
+}
+
+.auth-form {
+  gap: 18px;
+}
+
+.form-input-container {
+  gap: 12px;
+}
+
+.form-input {
+  @include apple-form-field();
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+
+  &:focus-within {
+    --background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(var(--app-accent-rgb), 0.42);
+    box-shadow: 0 0 0 3px rgba(var(--app-accent-rgb), 0.1);
+  }
+}
+
+.field-error {
+  margin: -5px 0 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.auth-submit {
+  @include apple-primary-button();
+
+  ion-spinner {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.auth-submit__loading {
+  margin-left: 8px;
+}
+
+@media (max-width: 420px) {
+  .auth-content {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: calc(var(--ion-safe-area-top, 0px) + 14px);
+    --padding-bottom: calc(var(--ion-safe-area-bottom, 0px) + 14px);
+  }
+
+  .auth-card {
+    gap: 20px;
+    padding: 24px 18px 20px;
+    border-radius: 26px;
+  }
+
+  .auth-header h1 {
+    font-size: 27px;
+  }
+}

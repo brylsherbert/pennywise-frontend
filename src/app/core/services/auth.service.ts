@@ -6,11 +6,13 @@ import { CategoriesStore } from './store/categories.store';
 import { TransactionsStore } from './store/transactions.store';
 import { UserStore } from './store/user.store';
 import { UpdateUserRequest } from '../models/user.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private router = inject(Router);
   private readonly authStore = inject(AuthStore);
   private readonly userStore = inject(UserStore);
   private readonly accountsStore = inject(AccountsStore);
@@ -24,6 +26,7 @@ export class AuthService {
 
       if (isLoggedOut) {
         this.clearSessionData();
+        await this.router.navigate(['/auth']);
         return true;
       }
 

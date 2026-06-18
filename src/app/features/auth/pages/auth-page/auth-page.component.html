@@ -1,0 +1,146 @@
+<ion-content class="auth-content ion-padding" mode="ios">
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-header">
+        <img
+          src="assets/pennywise-logo.png"
+          width="132"
+          height="74"
+          alt="PennyWise"
+          class="auth-logo"
+        />
+        <span class="auth-eyebrow">{{ eyebrow() }}</span>
+        <h1>{{ title() }}</h1>
+        <p>{{ description() }}</p>
+      </div>
+
+      <ion-segment
+        aria-label="Authentication mode"
+        [value]="selectedMode()"
+        (ionChange)="onModeChange($any($event).detail.value)"
+      >
+        <ion-segment-button value="sign-in">
+          <ion-label>Sign In</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="sign-up">
+          <ion-label>Sign Up</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <form novalidate (submit)="onSubmit($event)" class="auth-form">
+        <div class="form-input-container">
+          @if (isSignUp()) {
+            <ion-item lines="none" class="form-input">
+              <ion-input
+                label="Username"
+                labelPlacement="floating"
+                type="text"
+                autocomplete="username"
+                [formField]="registerForm.username"
+              ></ion-input>
+            </ion-item>
+
+            @if (registerForm.username().touched() && registerForm.username().invalid()) {
+              <ion-text color="danger">
+                <p class="field-error">
+                  {{ registerForm.username().errors()[0].message }}
+                </p>
+              </ion-text>
+            }
+          }
+
+          @if (isSignUp()) {
+            <ion-item lines="none" class="form-input">
+              <ion-input
+                label="Email"
+                labelPlacement="floating"
+                type="email"
+                autocomplete="email"
+                [formField]="registerForm.email"
+              ></ion-input>
+            </ion-item>
+
+            @if (registerForm.email().touched() && registerForm.email().invalid()) {
+              <ion-text color="danger">
+                <p class="field-error">
+                  {{ registerForm.email().errors()[0].message }}
+                </p>
+              </ion-text>
+            }
+          } @else {
+            <ion-item lines="none" class="form-input">
+              <ion-input
+                label="Email"
+                labelPlacement="floating"
+                type="email"
+                autocomplete="email"
+                [formField]="loginForm.email"
+              ></ion-input>
+            </ion-item>
+
+            @if (loginForm.email().touched() && loginForm.email().invalid()) {
+              <ion-text color="danger">
+                <p class="field-error">
+                  {{ loginForm.email().errors()[0].message }}
+                </p>
+              </ion-text>
+            }
+          }
+
+          @if (isSignUp()) {
+            <ion-item lines="none" class="form-input">
+              <ion-input
+                label="Password"
+                labelPlacement="floating"
+                type="password"
+                autocomplete="new-password"
+                [formField]="registerForm.password"
+              ></ion-input>
+            </ion-item>
+
+            @if (registerForm.password().touched() && registerForm.password().invalid()) {
+              <ion-text color="danger">
+                <p class="field-error">
+                  {{ registerForm.password().errors()[0].message }}
+                </p>
+              </ion-text>
+            }
+          } @else {
+            <ion-item lines="none" class="form-input">
+              <ion-input
+                label="Password"
+                labelPlacement="floating"
+                type="password"
+                autocomplete="current-password"
+                [formField]="loginForm.password"
+              ></ion-input>
+            </ion-item>
+
+            @if (loginForm.password().touched() && loginForm.password().invalid()) {
+              <ion-text color="danger">
+                <p class="field-error">
+                  {{ loginForm.password().errors()[0].message }}
+                </p>
+              </ion-text>
+            }
+          }
+        </div>
+
+        <ion-button
+          class="auth-submit"
+          expand="block"
+          type="submit"
+          [disabled]="isSubmitDisabled() || isSubmitting()"
+        >
+          @if (isSubmitting()) {
+            <ion-spinner name="crescent" aria-hidden="true"></ion-spinner>
+            <span class="auth-submit__loading">{{ submittingLabel() }}</span>
+          } @else {
+            {{ submitLabel() }}
+          }
+        </ion-button>
+      </form>
+
+    </div>
+  </div>
+</ion-content>
