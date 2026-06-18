@@ -1,0 +1,51 @@
+@use 'mixins' as *;
+
+.items-container {
+  @include apple-list-container();
+}
+
+.budgets-search {
+  @include apple-searchbar();
+}
+
+.budgets-list {
+  @include apple-grouped-list();
+}
+
+ion-item-group {
+  @include apple-item-group();
+}
+
+.budget-category-header {
+  @include apple-section-header();
+}
+
+.budget-category-header__eyebrow {
+  @include apple-section-eyebrow();
+}
+
+.budget-category-header__title {
+  @include apple-section-title();
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.budget-category-header__color {
+  width: 0.6rem;
+  height: 0.6rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.budget-category-header__count {
+  @include apple-section-count();
+}
+
+ion-item {
+  @include apple-empty-item();
+}
+
+@media (max-width: 767px) {
+  @include apple-list-page-mobile();
+}

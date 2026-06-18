@@ -1,0 +1,67 @@
+<app-header [summary]="headerSummary()">Budgets</app-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="items-container">
+    <ion-searchbar
+      class="budgets-search"
+      mode="ios"
+      (ionInput)="onSearch($event)"
+      placeholder="Search budgets"
+      debounce="300"
+    ></ion-searchbar>
+
+    @if (isLoadingBudgets() && groupedBudgets().length === 0) {
+      <app-budgets-list-skeleton />
+    } @else {
+      <div class="budgets-list">
+        @for (group of groupedBudgets(); track group.category_id ?? 'others') {
+        <ion-item-group>
+          <div class="budget-category-header">
+            <div>
+              <span class="budget-category-header__eyebrow">Category</span>
+              <h2 class="budget-category-header__title">
+                <span
+                  class="budget-category-header__color"
+                  [style.background-color]="group.category_color"
+                  aria-hidden="true"
+                ></span>
+                {{ group.category_label }}
+              </h2>
+            </div>
+            <span class="budget-category-header__count">
+              {{ group.budgets.length }}
+              {{ group.budgets.length === 1 ? 'budget' : 'budgets' }}
+            </span>
+          </div>
+          @for (budget of group.budgets; track budget.id) {
+          <app-budgets-item
+            [budget]="budget"
+            [categoryColor]="group.category_color"
+            (selected)="openBudget($event)"
+          />
+          }
+        </ion-item-group>
+        } @empty {
+        <ion-item lines="none">
+          <ion-label class="ion-text-center">
+            <p>No budgets found</p>
+          </ion-label>
+        </ion-item>
+        }
+      </div>
+      }
+  </div>
+
+  <ion-infinite-scroll
+    mode="ios"
+    (ionInfinite)="loadMore($event)"
+    threshold="100px"
+    [disabled]="!hasMoreBudgets() && !nextBudgetCursor()"
+  >
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

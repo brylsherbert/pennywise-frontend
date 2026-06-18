@@ -1,0 +1,53 @@
+@use 'mixins' as *;
+
+.items-container {
+  @include apple-list-container();
+}
+
+.filter-sort-bar {
+  @include apple-filter-sort-bar();
+}
+
+.transactions-search {
+  @include apple-searchbar();
+}
+
+.filter-chip {
+  @include apple-filter-chip();
+}
+
+.transactions-list {
+  @include apple-grouped-list();
+}
+
+ion-item-group {
+  @include apple-item-group();
+}
+
+.transaction-date-header {
+  @include apple-section-header();
+}
+
+.transaction-date-header__weekday {
+  @include apple-section-eyebrow();
+}
+
+.transaction-date-header__date {
+  @include apple-section-title();
+}
+
+.transaction-date-header__count {
+  @include apple-section-count();
+}
+
+.results-count {
+  @include apple-results-count();
+}
+
+ion-item {
+  @include apple-empty-item();
+}
+
+@media (max-width: 767px) {
+  @include apple-list-page-mobile();
+}

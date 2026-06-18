@@ -1,0 +1,36 @@
+<ion-header mode="ios" [translucent]="false">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/budgets" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>{{ budget()?.name ?? 'Budget' }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button
+        [disabled]="!budget()"
+        (click)="openBudgetEditModal()"
+        aria-label="Edit budget"
+      >
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  @if (budgetId()) {
+  <app-budget-transactions #budgetTransactions [budgetId]="budgetId()" />
+  }
+</ion-content>
+
+<app-budget-edit-modal
+  [isOpen]="isBudgetEditModalOpen()"
+  [budget]="budget()"
+  (dismissed)="onBudgetEditModalDismissed()"
+  (deleted)="onBudgetDeleted()"
+/>

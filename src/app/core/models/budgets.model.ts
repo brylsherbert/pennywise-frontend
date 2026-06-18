@@ -6,12 +6,21 @@ import { CursorPaginationParams } from './pagination.model';
 export interface Budget {
     id: string;
     user_id: string;
-    category_id: null;
+    category_id: string | null;
     name: string;
     target_amount: string;
     allocated_amount: string;
     created_at: string;
     updated_at: string;
+}
+
+export const BUDGET_OTHERS_CATEGORY_KEY = '__others__';
+
+export interface BudgetCategoryGroup {
+    category_id: string | null;
+    category_label: string;
+    category_color: string;
+    budgets: Budget[];
 }
 
 export interface BudgetSummary {
@@ -26,6 +35,7 @@ export interface BudgetSummary {
 // ─── Requests ──────────────────────────────────────────────────────────────
 
 interface BudgetRequest {
+    category_id?: string;
     name: string;
     target_amount: number;
 }

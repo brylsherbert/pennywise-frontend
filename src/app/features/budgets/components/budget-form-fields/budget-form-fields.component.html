@@ -1,0 +1,65 @@
+<div class="budget-form-fields">
+  <ion-item lines="none" class="form-input">
+    <ion-input
+      label="Name"
+      labelPlacement="floating"
+      [formField]="budgetForm().name"
+    ></ion-input>
+  </ion-item>
+
+  @if (budgetForm().name().touched() && budgetForm().name().invalid()) {
+    <ion-text color="danger">
+      <p class="field-error">{{ budgetForm().name().errors()[0].message }}</p>
+    </ion-text>
+  }
+
+  <ion-item lines="none" class="form-input">
+    <ion-input
+      label="Target Amount"
+      labelPlacement="floating"
+      type="number"
+      [formField]="budgetForm().target_amount"
+    ></ion-input>
+  </ion-item>
+
+  @if (budgetForm().target_amount().touched() && budgetForm().target_amount().invalid()) {
+    <ion-text color="danger">
+      <p class="field-error">{{ budgetForm().target_amount().errors()[0].message }}</p>
+    </ion-text>
+  }
+
+  @if (showCategoryFields()) {
+    <ion-item lines="none" class="form-input">
+      <ion-select
+        label="Category"
+        labelPlacement="floating"
+        interface="action-sheet"
+        [formField]="budgetForm().category_id"
+      >
+        <ion-select-option value="">None</ion-select-option>
+        @for (category of categories(); track category.id) {
+          <ion-select-option [value]="category.id">{{ category.name }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <div class="category-actions">
+      <button
+        class="category-action-button category-action-button--primary"
+        type="button"
+        (click)="createCategory.emit()"
+      >
+        <span class="category-action-button__icon" aria-hidden="true">+</span>
+        <span>Create category</span>
+      </button>
+
+      <button
+        class="category-action-button"
+        type="button"
+        (click)="manageCategories.emit()"
+      >
+        <span>Manage categories</span>
+      </button>
+    </div>
+  }
+</div>

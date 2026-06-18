@@ -17,7 +17,8 @@ import {
 import { API_STATUS, isApiSuccess, isApiSuccessWithData } from '../../models/api-response.model';
 
 const BUDGETS_STORAGE_KEY = 'budgets';
-const DEFAULT_BUDGETS_LIMIT = 10;
+const BUDGETS_SUMMARY_STORAGE_KEY = 'budgets-summary';
+const DEFAULT_BUDGETS_LIMIT = 100;
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +37,7 @@ export class BudgetsStore {
   public readonly nextCursor = this._nextCursor.asReadonly();
   public readonly hasMore = this._hasMore.asReadonly();
   public readonly loading = this._loading.asReadonly();
+  public readonly defaultBudgetsLimit = DEFAULT_BUDGETS_LIMIT;
 
   // Public actions
   public async getAllBudgets(params?: GetAllBudgetsParams) {
@@ -54,12 +56,9 @@ export class BudgetsStore {
         this._hasMore.set(response.pagination.hasMore);
 
         if (!params?.cursor) {
-          // first page — same as response.page === 1
-          this._budgets.set(response?.data);
-          this.storeBudgets(this._budgets());
+          this.storeBudgets(response.data);
         } else {
-          // next pages — merge into existing list
-          this._budgets.set([...this._budgets(), ...response?.data]);
+          this._budgets.set([...this._budgets(), ...response.data]);
         }
       }
     } catch (error) {
@@ -91,7 +90,7 @@ export class BudgetsStore {
 
       if (!isApiSuccessWithData(response, API_STATUS.OK)) return null;
 
-      this._budgetSummary.set(response.data);
+      this.storeBudgetSummary(response.data);
       return response.data;
     } catch (error) {
       console.error(`[BudgetsStore] failed to get budget summary: `, error);
@@ -154,8 +153,20 @@ export class BudgetsStore {
     }
   }
 
+  public async initializeBudgetSummaryFromStorage() {
+    const budgetSummary: BudgetSummary | null = this.getBudgetSummaryFromStorage();
+
+    if (budgetSummary) {
+      this.storeBudgetSummary(budgetSummary);
+      void this.getBudgetSummary();
+    } else {
+      await this.getBudgetSummary();
+    }
+  }
+
   public clearBudgets() {
     localStorage.removeItem(BUDGETS_STORAGE_KEY);
+    localStorage.removeItem(BUDGETS_SUMMARY_STORAGE_KEY);
     this._budgets.set([]);
     this._budgetSummary.set(null);
     this.clearPagination();
@@ -165,6 +176,11 @@ export class BudgetsStore {
   private storeBudgets(budgets: Budget[]) {
     this._budgets.set(budgets);
     localStorage.setItem(BUDGETS_STORAGE_KEY, JSON.stringify(budgets));
+  }
+
+  private storeBudgetSummary(budgetSummary: BudgetSummary | null) {
+    this._budgetSummary.set(budgetSummary);
+    localStorage.setItem(BUDGETS_SUMMARY_STORAGE_KEY, JSON.stringify(budgetSummary));
   }
 
   private getBudgetsFromStorage(): Budget[] {
@@ -179,6 +195,21 @@ export class BudgetsStore {
     } catch (error) {
       localStorage.removeItem(BUDGETS_STORAGE_KEY);
       return [];
+    }
+  }
+
+  private getBudgetSummaryFromStorage(): BudgetSummary | null {
+    try {
+      const rawStorage = localStorage.getItem(BUDGETS_SUMMARY_STORAGE_KEY);
+      if (!rawStorage) return null;
+
+      const parsedStorage = JSON.parse(rawStorage);
+      if (parsedStorage && typeof parsedStorage === 'object') return parsedStorage as BudgetSummary;
+
+      return null;
+    } catch (error) {
+      localStorage.removeItem(BUDGETS_SUMMARY_STORAGE_KEY);
+      return null;
     }
   }
 

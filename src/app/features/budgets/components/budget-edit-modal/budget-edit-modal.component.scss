@@ -1,0 +1,25 @@
+@use 'mixins' as *;
+
+ion-modal {
+  @include apple-modal-shell();
+}
+
+ion-content {
+  @include apple-modal-content();
+}
+
+.budget-form {
+  @include apple-modal-form();
+}
+
+.modal-actions {
+  @include apple-modal-actions();
+}
+
+ion-button[type='submit'] {
+  @include apple-primary-button();
+}
+
+.delete-button {
+  @include apple-danger-clear-button();
+}

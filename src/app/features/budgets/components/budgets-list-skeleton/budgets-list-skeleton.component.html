@@ -1,0 +1,18 @@
+<div class="budgets-skeleton-list" aria-busy="true" aria-label="Loading budgets">
+  @for (item of skeletonItems; track item) {
+    <article class="budget-skeleton-card">
+      <div class="budget-skeleton-card__header">
+        <div class="budget-skeleton budget-skeleton--thumbnail"></div>
+        <div class="budget-skeleton budget-skeleton--title"></div>
+        <div class="budget-skeleton budget-skeleton--status"></div>
+      </div>
+      <div class="budget-skeleton-card__body">
+        <div class="budget-skeleton budget-skeleton--progress"></div>
+        <div class="budget-skeleton-card__amounts">
+          <div class="budget-skeleton budget-skeleton--amount"></div>
+          <div class="budget-skeleton budget-skeleton--amount"></div>
+        </div>
+      </div>
+    </article>
+  }
+</div>

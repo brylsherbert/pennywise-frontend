@@ -1,0 +1,42 @@
+<article
+  class="budget-item"
+  role="link"
+  tabindex="0"
+  (click)="handleSelect()"
+  (keydown.enter)="handleSelect()"
+>
+  <div class="budget-item__header">
+    <div
+      class="item-thumbnail"
+      [style.--budget-category-color]="categoryColor()"
+      [style.--budget-category-color-rgb]="categoryColorRgb()"
+      aria-hidden="true"
+    >
+      <ion-icon name="wallet-outline"></ion-icon>
+    </div>
+    <h2 class="budget-item__name">{{ name() }}</h2>
+    <span [class]="'budget-item__status ' + progressClass()">
+      {{ fundingStatus() }}
+      <span class="budget-item__percent">{{ progressPercentLabel() }}</span>
+    </span>
+  </div>
+
+  <div class="budget-item__progress-section">
+    <ion-progress-bar
+      class="budget-item__progress"
+      [value]="progressValue()"
+      [color]="progressColor()"
+      [attr.aria-label]="progressAriaLabel()"
+    ></ion-progress-bar>
+
+    <div class="budget-item__amounts">
+      <span class="budget-item__allocated">{{ allocatedAmount() | currency }}</span>
+      <span class="budget-item__target">{{ targetAmount() | currency }}</span>
+    </div>
+
+    <p [class]="'budget-item__remaining ' + progressClass()">
+      {{ fundingGapDisplayAmount() | currency }}
+      {{ fundingGapLabel() }}
+    </p>
+  </div>
+</article>

@@ -1,0 +1,61 @@
+@use 'mixins' as *;
+
+.budget-form-fields {
+  @include flex-column();
+  gap: 14px;
+}
+
+.form-input {
+  @include apple-form-field();
+}
+
+.field-error {
+  font-size: 12px;
+  margin: -4px 0 0 12px;
+}
+
+.category-actions {
+  @include flex-row();
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: -2px;
+}
+
+.category-action-button {
+  @include flex-row();
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ion-color-medium);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &--primary {
+    border-color: rgba(var(--ion-color-primary-rgb), 0.24);
+    background: rgba(var(--ion-color-primary-rgb), 0.12);
+    color: var(--ion-color-primary);
+  }
+}
+
+.category-action-button__icon {
+  @include flex-row();
+  @include flex-center();
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(var(--ion-color-primary-rgb), 0.18);
+  font-size: 16px;
+  line-height: 1;
+}
