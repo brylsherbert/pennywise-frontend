@@ -14,7 +14,7 @@ bootstrapApplication(AppComponent, {
     provideAppInitializer(() => inject(AppInitializer).initializeApp()),
     provideZonelessChangeDetection(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular(),
+    provideIonicAngular({ useSetInputAPI: true }),
     provideRouter(routes, withPreloading(PreloadAllModules), withComponentInputBinding()),
     provideHttpClient(withInterceptorsFromDi()),
     {
