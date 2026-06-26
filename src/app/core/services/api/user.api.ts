@@ -2,11 +2,12 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { DeleteUserResponse, GetUserResponse, UpdateUserRequest, UpdateUserResponse } from '../../models/user.model';
+import { DeleteUserResponse, GetUserResponse, ResetAllDataResponse, UpdateUserRequest, UpdateUserResponse } from '../../models/user.model';
 
 const BASE_URL = `${environment.apiUrl}/user`;
 const UPDATE_USER_ENDPOINT = 'update';
 const DELETE_USER_ENDPOINT = 'delete';
+const RESET_ALL_DATA_ENDPOINT = 'reset-all-data';
 
 @Injectable({ providedIn: 'root' })
 export class UserApi {
@@ -22,5 +23,9 @@ export class UserApi {
 
   deletedUser(): Observable<DeleteUserResponse> {
     return this.http.delete<DeleteUserResponse>(`${BASE_URL}/${DELETE_USER_ENDPOINT}`);
+  }
+
+  resetAllData(): Observable<ResetAllDataResponse> {
+    return this.http.delete<ResetAllDataResponse>(`${BASE_URL}/${RESET_ALL_DATA_ENDPOINT}`);
   }
 }

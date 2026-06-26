@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { UserApi } from '../api/user.api';
-import { DeleteUserResponse, GetUserResponse, UpdateUserRequest, UpdateUserResponse } from '../../models/user.model';
+import { DeleteUserResponse, GetUserResponse, ResetAllDataResponse, UpdateUserRequest, UpdateUserResponse } from '../../models/user.model';
 import { API_STATUS, isApiSuccess, isApiSuccessWithData } from '../../models/api-response.model';
 
 @Injectable({
@@ -40,6 +40,19 @@ export class UserStore {
   public async deleteUser() {
     try {
       const response: DeleteUserResponse = await firstValueFrom(this.userApi.deletedUser());
+
+      if (!isApiSuccess(response, API_STATUS.OK)) return false;
+
+      return true;
+    } catch (error) {
+      console.error('[UserStore] failed to delete user: ', error);
+      throw error;
+    }
+  }
+
+  public async resetAllData() {
+    try {
+      const response: ResetAllDataResponse = await firstValueFrom(this.userApi.resetAllData());
 
       if (!isApiSuccess(response, API_STATUS.OK)) return false;
 

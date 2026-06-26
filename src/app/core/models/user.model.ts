@@ -24,3 +24,4 @@ export interface UpdateUserRequest {
 export type GetUserResponse = ApiSuccessResponse<User, 200>;
 export type UpdateUserResponse = ApiSuccessResponse<AuthData, 200>;
 export type DeleteUserResponse = ApiSuccessResponse<null, 200>;
+export type ResetAllDataResponse = ApiSuccessResponse<null, 200>;
