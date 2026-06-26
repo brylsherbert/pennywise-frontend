@@ -2,7 +2,7 @@
     ion-toolbar {
         --background: var(--ion-background-color);
         --border-style: none;
-        padding: 20px 0px 0px 0px;
+        padding-top: 20px;
     }
 
     ion-title {
@@ -15,9 +15,23 @@
     }
 }
 
-ion-header
+.close-button {
 
-.budget-card {
+    --background: var(--ion-color-step-100);
+    --border-radius: 50%;
+    --color: var(--ion-color-medium);
+
+    width: 38px;
+    height: 38px;
+
+    border: 1px solid var(--ion-color-step-200);
+
+    ion-icon {
+        font-size: 30px;
+    }
+}
+
+ion-header .budget-card {
 
     background: var(--ion-color-step-100);
 

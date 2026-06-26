@@ -46,7 +46,8 @@ export class TransactionBudgetsListComponent {
         transactionActionType: this.transactionActionType(),
         transactionBudget: existingTransactionBudget,
       },
-      initialBreakpoint: 0.40
+      initialBreakpoint: 0.80,
+      canDismiss: true,
     });
 
     await modal.present();

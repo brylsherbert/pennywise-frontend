@@ -1,15 +1,17 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, computed, inject, input, signal, viewChild } from '@angular/core';
 import { Budget } from '../../../../core/models/budgets.model';
-import { ModalController, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonInput, IonButton} from '@ionic/angular/standalone';
+import { ModalController, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonInput, IonButton, IonButtons, IonIcon } from '@ionic/angular/standalone';
 import { TransactionBudgetPayload } from '../../shared/transaction-form.model';
 import { TransactionBudget } from '../../../../core/models/transactions.model';
+import { addIcons } from 'ionicons';
+import { close } from 'ionicons/icons';
 
 @Component({
   selector: 'app-transaction-budget-allocation-modal',
   templateUrl: './transaction-budget-allocation-modal.component.html',
   styleUrls: ['./transaction-budget-allocation-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonButton, IonInput, IonItem, IonContent, IonTitle, IonToolbar, IonHeader]
+  imports: [IonIcon, IonButtons, IonButton, IonInput, IonItem, IonContent, IonTitle, IonToolbar, IonHeader]
 })
 export class TransactionBudgetAllocationModalComponent implements AfterViewInit {
   private readonly modalController = inject(ModalController);
@@ -38,6 +40,12 @@ export class TransactionBudgetAllocationModalComponent implements AfterViewInit 
 
   protected readonly amountInput = viewChild.required(IonInput);
 
+  constructor() {
+    addIcons({
+      close
+    });
+  }
+  
   async ngAfterViewInit(): Promise<void> {
     setTimeout(async () => {
       await this.amountInput().setFocus();
@@ -68,5 +76,9 @@ export class TransactionBudgetAllocationModalComponent implements AfterViewInit 
       },
       'save'
     );
+  }
+
+  protected async dismissModal(): Promise<void> {
+    void this.modalController.dismiss();
   }
 }

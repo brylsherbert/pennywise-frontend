@@ -1,13 +1,21 @@
 <ion-header mode="ios">
     <ion-toolbar>
         <ion-title>Allocate Budget</ion-title>
+
+        <ion-buttons slot="end">
+            <ion-button fill="clear" class="close-button" (click)="dismissModal()">
+
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content mode="ios" class="ion-padding">
     <div class="budget-card">
         <h2>{{ budgetName() }}</h2>
-        
+
         <p>
             Enter the amount you want to allocate.
         </p>
