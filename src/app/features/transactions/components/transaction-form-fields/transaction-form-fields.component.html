@@ -13,14 +13,16 @@
     </ion-text>
   }
 
-  <ion-item lines="none" class="form-input">
-    <ion-input
-      label="Amount"
-      labelPlacement="floating"
-      type="number"
-      [formField]="transactionForm().amount"
-    ></ion-input>
-  </ion-item>
+  @if (showAmountField()) {
+    <ion-item lines="none" class="form-input">
+      <ion-input
+        label="Amount"
+        labelPlacement="floating"
+        type="number"
+        [formField]="transactionForm().amount"
+      ></ion-input>
+    </ion-item>
+  }
 
   @if (transactionForm().amount().touched() && transactionForm().amount().invalid()) {
     <ion-text color="danger">
@@ -58,6 +60,10 @@
         }
       </ion-select>
     </ion-item>
+  }
+
+  @if (showBudgetsField()) {
+    <app-transaction-budgets-list [transactionBudgets]="transactionBudgets()"  [transactionActionType]="transactionActionType()" (budgetsData)="updateTransactionFormBudgets($event)"></app-transaction-budgets-list>
   }
 
   <section class="date-picker-card">

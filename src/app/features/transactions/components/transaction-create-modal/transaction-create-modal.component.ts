@@ -15,7 +15,7 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { closeOutline } from 'ionicons/icons';
+import { cashOutline, closeOutline } from 'ionicons/icons';
 import { CreateTransactionRequest, TransactionType } from '../../../../core/models/transactions.model';
 import { AccountsStore } from '../../../../core/services/store/accounts.store';
 import { BudgetsStore } from '../../../../core/services/store/budgets.store';
@@ -28,13 +28,17 @@ import {
   isAssociationInvalid,
   isDateToday,
   showAccountFieldForType,
+  showAmountFieldForType,
   showBudgetFieldForType,
+  showBudgetsFieldForType,
+  showTotalUnallocatedAmountFieldForType,
   TransactionFormData,
 } from '../../shared/transaction-form.model';
 import {
   getErrorMessage,
   refreshStoresForTransactionType,
 } from '../../shared/transaction-store-refresh.utils';
+import { UnallocatedBalanceHeaderComponent } from "../../../../shared/components/unallocated-balance-header/unallocated-balance-header.component";
 
 @Component({
   selector: 'app-transaction-create-modal',
@@ -56,7 +60,8 @@ import {
     IonSegmentButton,
     IonLabel,
     IonSpinner,
-  ],
+    UnallocatedBalanceHeaderComponent
+],
 })
 export class TransactionCreateModalComponent {
   private readonly accountsStore = inject(AccountsStore);
@@ -73,6 +78,7 @@ export class TransactionCreateModalComponent {
   protected readonly budgets = this.budgetsStore.budgets;
 
   protected readonly transactionTypes: TransactionType[] = ['expense', 'income', 'fill'];
+  protected readonly transactionActionType = signal<string>('create');
 
   private readonly _formModel = signal<TransactionFormData>(createDefaultTransactionFormData());
   private readonly _isSubmitting = signal(false);
@@ -86,6 +92,12 @@ export class TransactionCreateModalComponent {
   protected readonly selectedType = computed(() => this.formModel().type);
   protected readonly showAccountField = computed(() => showAccountFieldForType(this.selectedType()));
   protected readonly showBudgetField = computed(() => showBudgetFieldForType(this.selectedType()));
+  protected readonly showAmountField = computed(() => showAmountFieldForType(this.selectedType()));
+  protected readonly showBudgetsField = computed(() => showBudgetsFieldForType(this.selectedType()));
+  protected readonly showTotalUnallocatedAmountField = computed(() => showTotalUnallocatedAmountFieldForType(this.selectedType()));
+
+  protected readonly totalUnallocated = computed(() => Number(this.budgetsStore.budgetSummary()?.total_unallocated));
+
 
   protected readonly isSubmitDisabled = computed(
     () => this.transactionForm().invalid() || isAssociationInvalid(this.formModel()),
@@ -94,7 +106,7 @@ export class TransactionCreateModalComponent {
   protected readonly isSelectedToday = computed(() => isDateToday(this.selectedDate()));
 
   constructor() {
-    addIcons({ closeOutline });
+    addIcons({ closeOutline, cashOutline });
   }
 
   protected onModalDismiss(): void {
@@ -155,6 +167,7 @@ export class TransactionCreateModalComponent {
       title: model.title,
       type: model.type,
       amount: model.amount ?? 0,
+      budgets: model.budgets,
       transaction_date: model.transaction_date,
       ...(model.type !== 'fill' && model.account_id ? { account_id: model.account_id } : {}),
       ...(model.type !== 'income' && model.budget_id ? { budget_id: model.budget_id } : {}),

@@ -1,0 +1,33 @@
+@if (isLoadingBudgets() && groupedBudgets().length === 0) {
+<app-budgets-list-skeleton />
+} @else {
+<div class="budgets-list">
+    @for (group of groupedBudgets(); track group.category_id ?? 'others') {
+    <ion-item-group>
+        <div class="budget-category-header">
+            <div>
+                <span class="budget-category-header__eyebrow">Category</span>
+                <h2 class="budget-category-header__title">
+                    <span class="budget-category-header__color" [style.background-color]="group.category_color"
+                        aria-hidden="true"></span>
+                    {{ group.category_label }}
+                </h2>
+            </div>
+            <span class="budget-category-header__count">
+                {{ group.budgets.length }}
+                {{ group.budgets.length === 1 ? 'budget' : 'budgets' }}
+            </span>
+        </div>
+        @for (budget of group.budgets; track budget.id) {
+        <app-budgets-item [transactionBudget]="findBudgetInTransactionBudget(budget)" [transactionActionType]="transactionActionType()" [budget]="budget" [budgetPayloadNewAllocatedAmount]="findBudgetInBudgetPayload(budget)?.new_allocated_amount" [categoryColor]="group.category_color" (selected)="openBudget($event)" />
+        }
+    </ion-item-group>
+    } @empty {
+    <ion-item lines="none">
+        <ion-label class="ion-text-center">
+            <p>No budgets found</p>
+        </ion-label>
+    </ion-item>
+    }
+</div>
+}

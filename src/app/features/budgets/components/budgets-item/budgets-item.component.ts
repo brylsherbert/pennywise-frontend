@@ -5,6 +5,7 @@ import { Budget } from '../../../../core/models/budgets.model';
 import { addIcons } from 'ionicons';
 import { walletOutline } from 'ionicons/icons';
 import { buildBudgetFundingHealth } from '../../shared/budget-health.utils';
+import { TransactionBudget } from '../../../../core/models/transactions.model';
 
 @Component({
   selector: 'app-budgets-item',
@@ -19,12 +20,32 @@ export class BudgetsItemComponent {
   }
 
   budget = input<Budget | null>(null);
+  budgetAllocatedAmount = computed(() => Number(this.budget()?.allocated_amount))
+  budgetPayloadNewAllocatedAmount = input<number | undefined>(undefined);
   categoryColor = input<string | null>(null);
+  transactionActionType = input<string | null>(null);
+  transactionBudget = input<TransactionBudget | undefined>();
+  transactionBudgetAllocatedAmount = computed(() => Number(this.transactionBudget()?.allocated_amount));
   selected = output<Budget>();
 
   readonly name = computed(() => this.budget()?.name ?? '');
   readonly targetAmount = computed(() => Number(this.budget()?.target_amount ?? 0));
-  readonly allocatedAmount = computed(() => Number(this.budget()?.allocated_amount ?? 0));
+  readonly allocatedAmount = computed(() => {
+    if (this.transactionActionType() === 'update') {
+      if (this.budgetPayloadNewAllocatedAmount() !== undefined) {
+        const amountDelta = this.getAmountDelta(this.transactionBudgetAllocatedAmount(), this.budgetAllocatedAmount());
+        
+        return (this.budgetPayloadNewAllocatedAmount() ?? 0) - amountDelta;
+      };
+    }
+    
+    if (this.transactionActionType() === 'create') {
+      if (this.budgetPayloadNewAllocatedAmount() !== undefined) {
+        return this.budgetAllocatedAmount() + (this.budgetPayloadNewAllocatedAmount() ?? 0);
+      }
+    }
+    return this.budgetAllocatedAmount();
+  });
   readonly categoryColorRgb = computed(() => hexToRgb(this.categoryColor()));
 
   readonly fundingHealth = computed(() => buildBudgetFundingHealth(this.allocatedAmount(), this.targetAmount()));
@@ -50,8 +71,15 @@ export class BudgetsItemComponent {
       `${this.name()}: ${this.progressPercentLabel()} funded, ${this.fundingStatus()}, ${this.fundingGapDisplayAmount()} ${this.fundingGapLabel()}`,
   );
 
+  getAmountDelta(transactionBudgetAllocatedAmount: number, budgetAllocatedAmount: number) {
+    return transactionBudgetAllocatedAmount > budgetAllocatedAmount
+      ? transactionBudgetAllocatedAmount - budgetAllocatedAmount
+      : budgetAllocatedAmount - transactionBudgetAllocatedAmount
+  }
+
   handleSelect(): void {
     const budget = this.budget();
+
     if (budget) {
       this.selected.emit(budget);
     }

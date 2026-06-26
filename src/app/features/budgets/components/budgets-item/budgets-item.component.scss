@@ -71,7 +71,6 @@
   background: rgba(255, 255, 255, 0.08);
   font-size: 12px;
   font-weight: 800;
-  @include budget-health-color-variants();
 }
 
 .budget-item__percent {

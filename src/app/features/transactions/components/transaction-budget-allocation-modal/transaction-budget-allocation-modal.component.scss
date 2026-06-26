@@ -1,0 +1,72 @@
+:host {
+    ion-toolbar {
+        --background: var(--ion-background-color);
+        --border-style: none;
+        padding: 20px 0px 0px 0px;
+    }
+
+    ion-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+
+    ion-content {
+        --background: var(--ion-background-color);
+    }
+}
+
+ion-header
+
+.budget-card {
+
+    background: var(--ion-color-step-100);
+
+    border: 1px solid var(--ion-color-step-200);
+
+    border-radius: 22px;
+
+    padding: 20px;
+
+    margin-bottom: 24px;
+
+    h2 {
+
+        margin: 0;
+
+        font-size: 1.3rem;
+
+        font-weight: 700;
+
+    }
+
+    p {
+
+        margin: 8px 0 20px;
+
+        color: var(--ion-color-medium);
+
+        font-size: .95rem;
+
+    }
+
+}
+
+.allocation-input {
+
+    --background: var(--ion-color-step-50);
+
+    --border-radius: 14px;
+
+    --padding-start: 12px;
+
+    --inner-padding-end: 12px;
+
+}
+
+.save-button {
+
+    height: 50px;
+
+    font-weight: 600;
+
+}

@@ -24,14 +24,21 @@
       </ion-segment>
 
       <form class="transaction-form" novalidate (submit)="onSubmit($event)">
+        @if (showTotalUnallocatedAmountField()) {
+          <app-unallocated-balance-header [totalUnallocated]="totalUnallocated()"></app-unallocated-balance-header>
+        }
+
         <app-transaction-form-fields
           [transactionForm]="transactionForm"
           [accounts]="accounts()"
           [budgets]="budgets()"
           [showAccountField]="showAccountField()"
           [showBudgetField]="showBudgetField()"
+          [showAmountField]="showAmountField()"
+          [showBudgetsField]="showBudgetsField()"
           [selectedDate]="selectedDate()"
           [isSelectedToday]="isSelectedToday()"
+          [transactionActionType]="transactionActionType()"
           (setTodayClick)="setToday()"
         />
 

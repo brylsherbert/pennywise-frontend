@@ -15,8 +15,7 @@
       <ion-icon name="wallet-outline"></ion-icon>
     </div>
     <h2 class="budget-item__name">{{ name() }}</h2>
-    <span [class]="'budget-item__status ' + progressClass()">
-      {{ fundingStatus() }}
+    <span [class]="'budget-item__status'">
       <span class="budget-item__percent">{{ progressPercentLabel() }}</span>
     </span>
   </div>

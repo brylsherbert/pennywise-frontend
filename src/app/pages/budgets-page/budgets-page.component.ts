@@ -21,8 +21,7 @@ import { BudgetsListSkeletonComponent } from '../../features/budgets/components/
 import { BudgetsItemComponent } from '../../features/budgets/components/budgets-item/budgets-item.component';
 import { HeaderComponent } from '../../layout/header/header.component';
 import { formatCompactCurrency, toAmount } from '../../shared/utils/amount-format.utils';
-
-const DEFAULT_CATEGORY_COLOR = '#3880ff';
+import { buildGroupedBudgets } from '../../features/budgets/shared/budget-utils';
 
 @Component({
   selector: 'app-budgets-page',
@@ -98,52 +97,4 @@ export class BudgetsPageComponent {
   protected openBudget(budget: Budget): void {
     void this.router.navigate(['/budgets', budget.id], { state: { budget } });
   }
-}
-
-function buildGroupedBudgets(
-  budgets: Budget[],
-  categories: Category[],
-  searchQuery: string,
-): BudgetCategoryGroup[] {
-  const categoriesById = new Map(categories.map(category => [category.id, category]));
-  const groups = new Map<string, Budget[]>();
-
-  for (const budget of budgets) {
-    if (searchQuery && !budget.name.toLowerCase().includes(searchQuery)) {
-      continue;
-    }
-
-    const key = budget.category_id ?? BUDGET_OTHERS_CATEGORY_KEY;
-    const group = groups.get(key);
-
-    if (group) {
-      group.push(budget);
-    } else {
-      groups.set(key, [budget]);
-    }
-  }
-
-  const result: BudgetCategoryGroup[] = [];
-
-  for (const [key, groupBudgets] of groups) {
-    const category = key === BUDGET_OTHERS_CATEGORY_KEY ? null : categoriesById.get(key);
-
-    result.push({
-      category_id: key === BUDGET_OTHERS_CATEGORY_KEY ? null : key,
-      category_label:
-        key === BUDGET_OTHERS_CATEGORY_KEY
-          ? 'Others'
-          : (category?.name ?? 'Uncategorized'),
-      category_color: category?.color ?? DEFAULT_CATEGORY_COLOR,
-      budgets: groupBudgets,
-    });
-  }
-
-  result.sort((a, b) => {
-    if (a.category_id === null) return 1;
-    if (b.category_id === null) return -1;
-    return a.category_label.localeCompare(b.category_label);
-  });
-
-  return result;
 }
