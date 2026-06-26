@@ -31,6 +31,10 @@
     </ion-fab-button>
 
     <ion-fab-list side="top">
+      <ion-fab-button size="small" (click)="openCreateModal('transaction')" aria-label="Create transaction">
+        <ion-icon name="swap-horizontal-outline" aria-hidden="true"></ion-icon>
+      </ion-fab-button>
+      
       <ion-fab-button size="small" (click)="openCreateModal('budget')" aria-label="Create budget">
         <ion-icon name="pie-chart-outline" aria-hidden="true"></ion-icon>
       </ion-fab-button>
@@ -41,10 +45,6 @@
 
       <ion-fab-button size="small" (click)="openCreateModal('category')" aria-label="Create category">
         <ion-icon name="pricetags-outline" aria-hidden="true"></ion-icon>
-      </ion-fab-button>
-
-      <ion-fab-button size="small" (click)="openCreateModal('transaction')" aria-label="Create transaction">
-        <ion-icon name="swap-horizontal-outline" aria-hidden="true"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
