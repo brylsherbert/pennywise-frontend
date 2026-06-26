@@ -46,7 +46,7 @@ export class TransactionBudgetsListComponent {
         transactionActionType: this.transactionActionType(),
         transactionBudget: existingTransactionBudget,
       },
-      initialBreakpoint: 0.80,
+      initialBreakpoint: 1,
       canDismiss: true,
     });
 
