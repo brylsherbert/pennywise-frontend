@@ -2,6 +2,7 @@ import { ApiPaginatedSuccessResponse, ApiSuccessResponse } from './api-response.
 import { CursorPaginationParams } from './pagination.model';
 import { Account } from './accounts.model';
 import { Budget } from './budgets.model';
+import { TransactionBudgetPayload } from '../../features/transactions/shared/transaction-form.model';
 
 export type TransactionType = 'income' | 'expense' | 'fill';
 
@@ -20,6 +21,16 @@ export interface Transaction {
     updated_at: string;
 }
 
+export interface TransactionBudget {
+    id: string;
+    user_id: string;
+    transaction_id: string;
+    budget_id: string;
+    allocated_amount: string;
+    created_at: string;
+    updated_at: string;
+}
+
 export interface TransactionDateGroup {
     transaction_date: string;
     transactions: Transaction[];
@@ -31,6 +42,7 @@ interface TransactionRequest {
     account_id?: string;
     budget_id?: string;
     title: string;
+    budgets: TransactionBudgetPayload[],
     type: TransactionType;
     amount: number;
     transaction_date: string
@@ -65,6 +77,8 @@ interface UpdateTransactionResponseData {
 export type GetAllTransactionsResponse = ApiPaginatedSuccessResponse<Transaction[], 200>;
 export type GetAllTransactionsByBudgetIdResponse = ApiSuccessResponse<Transaction[], 200>;
 export type GetAllTransactionsByAccountIdResponse = ApiSuccessResponse<Transaction[], 200>;
+export type GetAllTransactionBudgetsResponse = ApiSuccessResponse<TransactionBudget[], 200>;
+export type GetAllTransactionBudgetsByTransactionIdResponse = ApiSuccessResponse<TransactionBudget[], 200>;
 export type GetTransactionResponse = ApiSuccessResponse<Transaction, 200>;
 export type CreateTransactionResponse = ApiSuccessResponse<CreateTransactionResponseData, 201>;
 export type UpdateTransactionResponse = ApiSuccessResponse<UpdateTransactionResponseData, 200>;
