@@ -14,6 +14,7 @@ export interface Budget {
     updated_at: string;
 }
 
+export const DEFAULT_CATEGORY_COLOR = '#3880ff';
 export const BUDGET_OTHERS_CATEGORY_KEY = '__others__';
 
 export interface BudgetCategoryGroup {
