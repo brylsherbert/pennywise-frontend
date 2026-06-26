@@ -13,6 +13,8 @@ import {
   DeleteTransactionResponse,
   GetAllTransactionsByBudgetIdResponse,
   GetAllTransactionsByAccountIdResponse,
+  GetAllTransactionBudgetsByTransactionIdResponse,
+  GetAllTransactionBudgetsResponse,
 } from '../../models/transactions.model';
 import { API_STATUS, isApiSuccess, isApiSuccessWithData } from '../../models/api-response.model';
 
@@ -92,6 +94,32 @@ export class TransactionsStore {
     }
   }
 
+  public async getAllTransactionBudgets() {
+    try {
+      const response: GetAllTransactionBudgetsResponse = await firstValueFrom(this.transactionsApi.getAllTransactionBudgets());
+
+      if (!isApiSuccessWithData(response, API_STATUS.OK)) return null;
+
+      return response.data;
+    } catch (error) {
+      console.error(`[TransactionsStore] failed to get transactions budgets: `, error);
+      throw error;
+    }
+  }
+
+  public async getAllTransactionBudgetByTransactionId(id: string) {
+    try {
+      const response: GetAllTransactionBudgetsByTransactionIdResponse = await firstValueFrom(this.transactionsApi.getAllTransactionBudgetsByTransactionId(id));
+
+      if (!isApiSuccessWithData(response, API_STATUS.OK)) return null;
+
+      return response.data;
+    } catch (error) {
+      console.error(`[TransactionsStore] failed to get transaction budgets by transaction id: `, error);
+      throw error;
+    }
+  }
+
   public async getTransactionById(id: string) {
     try {
       const response: GetTransactionResponse = await firstValueFrom(this.transactionsApi.getTransactionById(id));
@@ -145,6 +173,20 @@ export class TransactionsStore {
       return true;
     } catch (error) {
       console.error(`[TransactionsStore] failed to delete transaction: `, error);
+      throw error;
+    }
+  }
+
+  public async deleteTransactionBudgetById(id: string) {
+    try {
+      const response: DeleteTransactionResponse = await firstValueFrom(this.transactionsApi.deleteTransactionBudgetById(id));
+
+      if (!isApiSuccess(response, API_STATUS.OK)) return false;
+
+      this._transactions.update(transactions => transactions.filter(t => t.id !== id));
+      return true;
+    } catch (error) {
+      console.error(`[TransactionsStore] failed to delete transaction budget: `, error);
       throw error;
     }
   }
