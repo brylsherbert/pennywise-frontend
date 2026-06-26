@@ -12,10 +12,14 @@ import {
   UpdateTransactionResponse,
   GetAllTransactionsByBudgetIdResponse,
   GetAllTransactionsByAccountIdResponse,
+  GetAllTransactionBudgetsByTransactionIdResponse,
+  GetAllTransactionBudgetsResponse,
 } from '../../models/transactions.model';
 import { CursorPaginationParams } from '../../models/pagination.model';
 
 const BASE_URL = `${environment.apiUrl}/transactions`;
+const TRANSACTION_BUDGET_ENDPOINT = `fill-budgets`;
+const TRANSACTION_BUDGET_DELETE_ENDPOINT = `fill-budget/delete`;
 const CREATE_ENDPOINT = 'create';
 const UPDATE_ENDPOINT = 'update';
 const DELETE_ENDPOINT = 'delete';
@@ -43,6 +47,14 @@ export class TransactionsApi {
     return this.http.get<GetAllTransactionsByAccountIdResponse>(`${BASE_URL}/${id}/${ACCOUNTS_ENDPOINT}`);
   }
 
+  getAllTransactionBudgets(): Observable<GetAllTransactionBudgetsResponse> {
+    return this.http.get<GetAllTransactionBudgetsResponse>(`${BASE_URL}/${TRANSACTION_BUDGET_ENDPOINT}`);
+  }
+
+  getAllTransactionBudgetsByTransactionId(id: string): Observable<GetAllTransactionBudgetsByTransactionIdResponse> {
+    return this.http.get<GetAllTransactionBudgetsByTransactionIdResponse>(`${BASE_URL}/${id}/${TRANSACTION_BUDGET_ENDPOINT}`);
+  }
+
   getTransactionById(id: string): Observable<GetTransactionResponse> {
     return this.http.get<GetTransactionResponse>(`${BASE_URL}/${id}`);
   }
@@ -57,5 +69,9 @@ export class TransactionsApi {
 
   deleteTransactionById(id: string): Observable<DeleteTransactionResponse> {
     return this.http.delete<DeleteTransactionResponse>(`${BASE_URL}/${id}/${DELETE_ENDPOINT}`);
+  }
+
+  deleteTransactionBudgetById(id: string): Observable<DeleteTransactionResponse> {
+    return this.http.delete<DeleteTransactionResponse>(`${BASE_URL}/${id}/${TRANSACTION_BUDGET_DELETE_ENDPOINT}`);
   }
 }
