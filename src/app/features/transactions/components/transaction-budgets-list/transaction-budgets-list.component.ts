@@ -29,6 +29,7 @@ export class TransactionBudgetsListComponent {
 
   readonly transactionActionType = input<string | null>(null);
   readonly transactionBudgets = input<TransactionBudget[] | undefined>();
+  protected readonly totalUnallocated = computed(() => Number(this.budgetsStore.budgetSummary()?.total_unallocated));
 
   readonly budgetsData = output<TransactionBudgetPayload[]>();
 
@@ -45,6 +46,7 @@ export class TransactionBudgetsListComponent {
         budgetPayload: existingBudgetPayload,
         transactionActionType: this.transactionActionType(),
         transactionBudget: existingTransactionBudget,
+        totalUnallocated: this.totalUnallocated(),
       },
       initialBreakpoint: 1,
       canDismiss: true,

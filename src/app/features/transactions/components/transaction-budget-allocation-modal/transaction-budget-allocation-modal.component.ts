@@ -5,13 +5,14 @@ import { TransactionBudgetPayload } from '../../shared/transaction-form.model';
 import { TransactionBudget } from '../../../../core/models/transactions.model';
 import { addIcons } from 'ionicons';
 import { close } from 'ionicons/icons';
+import { UnallocatedBalanceHeaderComponent } from "../../../../shared/components/unallocated-balance-header/unallocated-balance-header.component";
 
 @Component({
   selector: 'app-transaction-budget-allocation-modal',
   templateUrl: './transaction-budget-allocation-modal.component.html',
   styleUrls: ['./transaction-budget-allocation-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonIcon, IonButtons, IonButton, IonInput, IonItem, IonContent, IonTitle, IonToolbar, IonHeader]
+  imports: [IonIcon, IonButtons, IonButton, IonInput, IonItem, IonContent, IonTitle, IonToolbar, IonHeader, UnallocatedBalanceHeaderComponent]
 })
 export class TransactionBudgetAllocationModalComponent implements AfterViewInit {
   private readonly modalController = inject(ModalController);
@@ -19,6 +20,7 @@ export class TransactionBudgetAllocationModalComponent implements AfterViewInit 
   readonly budget = input.required<Budget>();
   readonly budgetPayload = input.required<TransactionBudgetPayload>();
   readonly transactionBudget = input<TransactionBudget>();
+  readonly totalUnallocated = input<number>(0);
   readonly budgetPayloadNewAllocatedAmount = computed(() => this.budgetPayload()?.new_allocated_amount);
   readonly transactionBudgetAllocatedAmount = computed(() => Number(this.transactionBudget()?.allocated_amount) ?? 0);
   readonly transactionActionType = input.required();

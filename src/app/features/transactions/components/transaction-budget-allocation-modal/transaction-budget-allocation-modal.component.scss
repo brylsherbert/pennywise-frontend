@@ -1,4 +1,10 @@
+@use 'mixins' as *;
+
 :host {
+    ion-header {
+        padding-top: env(safe-area-inset-top, 0);
+    }
+
     ion-toolbar {
         --background: var(--ion-background-color);
         --border-style: none;
@@ -13,6 +19,11 @@
     ion-content {
         --background: var(--ion-background-color);
     }
+}
+
+.content-wrapper {
+    @include flex-column();
+    padding: 20px 10px;
 }
 
 .close-button {
@@ -31,50 +42,28 @@
     }
 }
 
-ion-header .budget-card {
-
+.budget-card {
     background: var(--ion-color-step-100);
-
     border: 1px solid var(--ion-color-step-200);
-
     border-radius: 22px;
-
-    padding: 20px;
-
+    padding: 30px 10px 0px 10px;
     margin-bottom: 24px;
 
     h2 {
-
         margin: 0;
-
         font-size: 1.3rem;
-
         font-weight: 700;
-
     }
 
     p {
-
         margin: 8px 0 20px;
-
         color: var(--ion-color-medium);
-
         font-size: .95rem;
-
     }
-
 }
 
 .allocation-input {
-
-    --background: var(--ion-color-step-50);
-
     --border-radius: 14px;
-
-    --padding-start: 12px;
-
-    --inner-padding-end: 12px;
-
 }
 
 .save-button {
