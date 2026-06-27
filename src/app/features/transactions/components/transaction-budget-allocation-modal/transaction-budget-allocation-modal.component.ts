@@ -21,7 +21,7 @@ export class TransactionBudgetAllocationModalComponent implements AfterViewInit 
   readonly budgetPayload = input.required<TransactionBudgetPayload>();
   readonly transactionBudget = input<TransactionBudget>();
   readonly totalUnallocated = input<number>(0);
-  readonly budgetPayloadNewAllocatedAmount = computed(() => this.budgetPayload()?.new_allocated_amount);
+  readonly budgetPayloadNewAllocatedAmount = computed(() => Number(this.budgetPayload()?.new_allocated_amount));
   readonly transactionBudgetAllocatedAmount = computed(() => Number(this.transactionBudget()?.allocated_amount) ?? 0);
   readonly transactionActionType = input.required();
   readonly budgetId = computed(() => this.budget().id);

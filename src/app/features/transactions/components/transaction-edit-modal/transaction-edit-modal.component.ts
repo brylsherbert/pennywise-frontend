@@ -202,15 +202,15 @@ export class TransactionEditModalComponent {
     event.preventDefault();
 
     const updateRequest = this.toUpdateRequest();
-
+    
     this._isSubmitting.set(true);
 
     try {
       const isUpdated = await this.transactionStore.updateTransaction(this.transaction().id, updateRequest);
 
       if (isUpdated) {
-        refreshStoresForTransactionType(this.selectedType(), this.accountsStore, this.budgetsStore);
         await this.uiService.showToast('Transaction updated successfully', { color: 'success' });
+        refreshStoresForTransactionType(this.selectedType(), this.accountsStore, this.budgetsStore);
         await this.closeModal();
         return;
       }

@@ -33,9 +33,13 @@ export class BudgetsItemComponent {
   readonly allocatedAmount = computed(() => {
     if (this.transactionActionType() === 'update') {
       if (this.budgetPayloadNewAllocatedAmount() !== undefined) {
-        const amountDelta = this.getAmountDelta(this.transactionBudgetAllocatedAmount(), this.budgetAllocatedAmount());
+        let amountWithNoAllocation = 0;
         
-        return (this.budgetPayloadNewAllocatedAmount() ?? 0) - amountDelta;
+        if (this.transactionBudget() !== undefined) {
+          amountWithNoAllocation = this.subtractAmountFromBudget(this.budgetAllocatedAmount(), this.transactionBudgetAllocatedAmount());
+        }
+        
+        return (this.budgetPayloadNewAllocatedAmount() ?? 0) + amountWithNoAllocation;
       };
     }
     
@@ -44,6 +48,7 @@ export class BudgetsItemComponent {
         return this.budgetAllocatedAmount() + (this.budgetPayloadNewAllocatedAmount() ?? 0);
       }
     }
+
     return this.budgetAllocatedAmount();
   });
   readonly categoryColorRgb = computed(() => hexToRgb(this.categoryColor()));
@@ -71,10 +76,9 @@ export class BudgetsItemComponent {
       `${this.name()}: ${this.progressPercentLabel()} funded, ${this.fundingStatus()}, ${this.fundingGapDisplayAmount()} ${this.fundingGapLabel()}`,
   );
 
-  getAmountDelta(transactionBudgetAllocatedAmount: number, budgetAllocatedAmount: number) {
-    return transactionBudgetAllocatedAmount > budgetAllocatedAmount
-      ? transactionBudgetAllocatedAmount - budgetAllocatedAmount
-      : budgetAllocatedAmount - transactionBudgetAllocatedAmount
+  subtractAmountFromBudget(totalAllocatedAmount: number, existingTransactionBudgetAmount: number) {
+    const result = totalAllocatedAmount - existingTransactionBudgetAmount;
+    return Number(result);
   }
 
   handleSelect(): void {
